@@ -102,9 +102,7 @@
 
     };
 
-    tracker.windowStateInit('scrolldepth', 0);
-
-    tracker.windowStateChange('url', window.location.href);
+    /* ClientState */
 
     tracker.clientStateChange('session', sessionId);
 
@@ -118,7 +116,26 @@
 
     tracker.clientStateChange('navigator.language', navigator.language);
 
-    tracker.clientStateChange('navigator.system_language', navigator.systemLanguage);
+    if (navigator.systemLanguage) {
+        tracker.clientStateChange('navigator.system_language', navigator.systemLanguage);
+    }
+
+    /* WindowState */
+
+    tracker.windowStateChange('url', window.location.href);
+
+    tracker.windowStateChange('pathname', window.location.pathname);
+
+    tracker.windowStateChange('referrer', document.referrer);
+
+    if (window.location.hash) {
+        tracker.windowStateInit('url.hash', window.location.hash);
+    }
+
+    window.addEventListener("hashchange", function() {
+        tracker.windowStateChange('url.hash', window.location.hash);
+    });
+
 
     return tracker;
 
