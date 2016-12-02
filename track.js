@@ -58,6 +58,7 @@
     };
 
     window.addEventListener('beforeunload', function() {
+        flush();
         connection.close();
     });
 
@@ -66,7 +67,7 @@
     var enqueue = function enqueue(key, value) {
         queue.push([new Date().getTime() - startTime, key, value]);
         if (!flushTimeout) {
-            flushTimeout = window.setTimeout(flush, 200);
+            flushTimeout = window.setTimeout(flush, 500);
         }
     };
 
