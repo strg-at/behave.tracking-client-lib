@@ -1,10 +1,4 @@
-(function(factory) {
-    // Browser globals (root is window)
-    if (!window.strg || !window.strg.metrics) {
-        throw "strg.metrics not loaded";
-    }
-    window.strg.metrics.scrollDepthMeter = factory(window.strg);
-})(function metricsFactory(strg) {
+(function() {
 
     var tracking = strg.metrics;
 
@@ -130,7 +124,7 @@
         );
     };
 
-    var API = {
+    tracking.scrollDepthMeter = {
 
         add: function(selector, id) {
             new ScrollDepthMeter(document.querySelector(selector), {
@@ -146,6 +140,4 @@
         }
     };
 
-    return API;
-
-});
+})();

@@ -1,8 +1,4 @@
-(function(factory) {
-    // Browser globals (root is window)
-    window.strg = window.strg || {};
-    window.strg.metrics = factory();
-})(function metricsFactory() {
+(function() {
 
     /* global screen, localStorage, sessionStorage, navigator */
 
@@ -137,7 +133,7 @@
         tracker.windowStateChange('url.hash', window.location.hash);
     });
 
+    window.strg = window.strg || {};
+    window.strg.metrics = tracker;
 
-    return tracker;
-
-});
+})();

@@ -1,10 +1,4 @@
-(function(factory) {
-    // Browser globals (root is window)
-    if (!window.strg || !window.strg.metrics) {
-        throw "strg.metrics not loaded";
-    }
-    factory(window.strg);
-})(function metricsFactory(strg) {
+(function() {
 
     var tracker = strg.metrics;
 
@@ -23,8 +17,8 @@
 
     if (visibilityChange) {
         document.addEventListener(visibilityChange, function() {
-            tracker.windowStateChange('visibility', !document[hidden]);
+            tracker.windowStateChange('window.active', !document[hidden]);
         }, false);
     }
 
-});
+})();
