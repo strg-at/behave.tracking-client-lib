@@ -43,7 +43,6 @@
         var payload = queue;
         queue = [];
         payload.splice(0, 0, clientId, windowId);
-        console.log('Sending', payload);
         connection.send(JSON.stringify(payload));
     };
 
