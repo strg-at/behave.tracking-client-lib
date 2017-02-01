@@ -38,6 +38,7 @@
             return;
         }
         if (!connection || connection.readyState != window.WebSocket.OPEN) {
+            flushTimeout = window.setTimeout(flush, 500);
             return;
         }
         var payload = queue;
