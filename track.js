@@ -47,7 +47,11 @@
         connection.send(JSON.stringify(payload));
     };
 
-    var connection = new window.WebSocket('ws://localhost:8081');
+    var protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
+
+    var hostname = window.location.hostname ? window.location.hostname : 'localhost';
+
+    var connection = new window.WebSocket(protocol + '://' + hostname + ':8081');
 
     connection.onopen = function() {
         flush();
