@@ -1,4 +1,4 @@
-(function() {
+(function(window) {
 
     var tracking = strg.metrics;
 
@@ -140,4 +140,4 @@
         }
     };
 
-})();
+})(this);

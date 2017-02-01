@@ -1,4 +1,4 @@
-(function() {
+(function(window) {
 
     /* global screen, localStorage, sessionStorage, navigator */
 
@@ -140,4 +140,4 @@
     window.strg = window.strg || {};
     window.strg.metrics = tracker;
 
-})();
+})(this);
