@@ -41,10 +41,8 @@
             flushTimeout = window.setTimeout(flush, 500);
             return;
         }
-        var payload = queue;
+        connection.send(JSON.stringify(queue));
         queue = [];
-        payload.splice(0, 0, clientId, windowId);
-        connection.send(JSON.stringify(payload));
     };
 
     var protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
@@ -54,6 +52,7 @@
     var connection = new window.WebSocket(protocol + '://' + hostname + ':8081');
 
     connection.onopen = function() {
+        connection.send(JSON.stringify([clientId, windowId]));
         flush();
     };
 
