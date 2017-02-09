@@ -49,14 +49,34 @@
 
     var hostname = window.location.hostname ? window.location.hostname : 'localhost';
 
-    var connection = new window.WebSocket(protocol + '://' + hostname + ':8081');
+    var connection;
 
-    connection.onopen = function() {
-        connection.send(JSON.stringify([clientId, windowId]));
-        flush();
+    var wasConnected = false;
+
+    function connect() {
+
+        connection = new window.WebSocket(protocol + '://' + hostname + ':8081');
+
+        connection.onopen = function() {
+            connection.send(JSON.stringify([clientId, windowId, wasConnected]));
+            wasConnected = true;
+            flush();
+        };
+
+        connection.onclose = function() {
+            if (!shuttingDown) {
+                window.setTimeout(connect, 500);
+            }
+        };
+
     };
 
+    connect();
+
+    var shuttingDown = false;
+
     window.addEventListener('beforeunload', function() {
+        shuttingDown = true;
         flush();
         connection.close();
     });
