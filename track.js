@@ -123,9 +123,12 @@
             if (endpointUrl) {
                 endpoint = endpointUrl;
             } else {
-                var protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
                 var hostname = window.location.hostname ? window.location.hostname : 'localhost';
-                endpoint = protocol + '://' + hostname + ':8081';
+                endpoint = hostname + ':8081';
+            }
+            if (endpoint.indexOf('://') === -1) {
+                var protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
+                endpoint = protocol + '://' + endpoint;
             }
             connect();
         }
