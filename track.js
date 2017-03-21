@@ -38,7 +38,7 @@
             return;
         }
         if (!connection || connection.readyState != window.WebSocket.OPEN) {
-            flushTimeout = window.setTimeout(flush, 500);
+            // this function wil be called again once the connection is open
             return;
         }
         connection.send(JSON.stringify(queue));
@@ -47,7 +47,7 @@
 
     var endpoint;
 
-    var connection;
+    var connection = null;
 
     var wasConnected = false;
 
@@ -63,6 +63,7 @@
 
         connection.onclose = function() {
             if (!shuttingDown) {
+                connection = null;
                 window.setTimeout(connect, 500);
             }
         };
@@ -74,7 +75,9 @@
     window.addEventListener('beforeunload', function() {
         shuttingDown = true;
         flush();
-        connection.close();
+        if (connection) {
+            connection.close();
+        }
     });
 
     var flushTimeout = null;
