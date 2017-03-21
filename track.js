@@ -45,9 +45,7 @@
         queue = [];
     };
 
-    var protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
-
-    var hostname = window.location.hostname ? window.location.hostname : 'localhost';
+    var endpoint;
 
     var connection;
 
@@ -55,7 +53,7 @@
 
     function connect() {
 
-        connection = new window.WebSocket(protocol + '://' + hostname + ':8081');
+        connection = new window.WebSocket(endpoint);
 
         connection.onopen = function() {
             connection.send(JSON.stringify([clientId, windowId, wasConnected]));
@@ -70,8 +68,6 @@
         };
 
     };
-
-    connect();
 
     var shuttingDown = false;
 
@@ -118,6 +114,17 @@
 
         trigger: function trigger(name, data) {
             enqueue(name, data);
+        },
+
+        init: function init(endpointUrl) {
+            if (endpointUrl) {
+                endpoint = endpointUrl;
+            } else {
+                var protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
+                var hostname = window.location.hostname ? window.location.hostname : 'localhost';
+                endpoint = protocol + '://' + hostname + ':8081';
+            }
+            connect();
         }
 
     };

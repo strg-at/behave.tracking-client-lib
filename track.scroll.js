@@ -2,6 +2,11 @@
 
     var tracking = strg.metrics;
 
+    var DEFAULTS = {
+        THROTTLE_DELAY: 200,
+        GAUGE_POINT_INVERVAL: 25
+    };
+
     // TODO: move to helpers?
     // Throttle with leading/trailing option
     // src: http://underscorejs.org/docs/underscore.html#section-82
@@ -38,83 +43,68 @@
     };
 
     var ScrollDepthMeter = function(DOMNode, options) {
-        this.init(DOMNode, options);
-        return this;
-    };
-
-
-    ScrollDepthMeter.prototype.init = function(DOMNode, options) {
         this.DOMNode = DOMNode;
-        this.options = options = options || {};
-        this.id = options.id || DOMNode.nodeName + ((DOMNode.id) ? "." + DOMNode.id : "");
-        this.maxPercent = 0;
+        this.options = options || {};
+        this.id = options.id || DOMNode.nodeName + 
+            ((DOMNode.id) ? "." + DOMNode.id : "");
+        this.gaugePointInterval = (typeof options.gaugePointInterval === 'number') ?
+            options.gaugePointInterval : DEFAULTS.GAUGE_POINT_INVERVAL;
         if (this.options.breakpoint) {
             this.scrollHandler = throttle(this.trackBreakPoint.bind(this), 200);
+            this.scrollHandler();
         } else {
-            this.scrollHandler = throttle(this.track.bind(this), 500);
+            this.gaugePoints = this.makeGaugePointsArray(
+                this.DOMNode.getBoundingClientRect(),
+                this.gaugePointInterval);
+            this.scrollHandler = throttle(this.trackGaugePoints.bind(this),
+                DEFAULTS.THROTTLE_DELAY);
         }
-        // TODO: Corner case, skip first call (for initial scroll event on page reloads etc.)
         window.addEventListener('scroll', this.scrollHandler);
     };
 
-    ScrollDepthMeter.prototype.track = function() {
-        var percent = this.gauge();
-        if (!percent) { return; }
-        if (!this.options.breakpoint) {
-            tracking.windowStateChange('scroll.percent.' + this.id, percent);
-        }
-        if (!this.end && percent === 100) {
-            this.end = true;
-            tracking.windowStateChange('scroll.breakpoint', this.id);
-            if (this.options.breakpoint) {
-                window.removeEventListener('scroll', this.scrollHandler);
-            }
-        }
-    };
-
     ScrollDepthMeter.prototype.trackBreakPoint = function() {
-        var visible = this.gaugeBreakPoint();
-        if (!visible) { return; }
-        this.end = true;
+        var rect = this.DOMNode.getBoundingClientRect();
+        if (!this.isRectVisible(rect)) { return; }
         tracking.windowStateChange('scroll.breakpoint', this.id);
         window.removeEventListener('scroll', this.scrollHandler);
     };
 
-    ScrollDepthMeter.prototype.quantize = function(value) {
-        return Math.round(value/5)*5;
-    };
-
-    ScrollDepthMeter.prototype.gauge = function() {
+    ScrollDepthMeter.prototype.trackGaugePoints = function() {
+        var self = this;
         var percent;
-        var rect = this.DOMNode.getBoundingClientRect();
-        // Check visibility
-        if (!this.visibleRect(rect)) {
+        var interval = self.gaugePointInterval;
+        var rect = self.DOMNode.getBoundingClientRect();
+        if (!self.isRectVisible(rect)) {
             return false;
         }
         var viewPortHeight = (window.innerHeight || 
             document.documentElement.clientHeight);
-
-        // TODO: check if out of view, then return false;
-        var scrollDepthPixels = rect.height ? 
+        var scrollDepthPixelsBottom = rect.height ? 
             Math.max(0, Math.min(viewPortHeight - rect.top, rect.height)) : 
             Math.max(0, Math.min(viewPortHeight - rect.top, 1));
-        if (rect.height === 0) {
-            percent = scrollDepthPixels ? 100 : 0;
-        } else {
-            percent = this.quantize(scrollDepthPixels / rect.height * 100);
+        self.gaugePoints.filter(function(gp) {
+            return gp && gp[0] <= scrollDepthPixelsBottom;
+        }).forEach(function(gp) {
+            tracking.windowStateChange('scroll.percent.' + self.id, gp[1]);
+        });
+        self.gaugePoints = self.gaugePoints.filter(function(gp) {
+            return gp && gp[0] > scrollDepthPixelsBottom;
+        });
+        if (self.gaugePoints.length === 0) {
+            window.removeEventListener('scroll', this.scrollHandler);
         }
-        if (this.maxPercent < percent) {
-            this.maxPercent = percent;
-        }
-        return percent;
     };
 
-    ScrollDepthMeter.prototype.gaugeBreakPoint = function() {
-        var rect = this.DOMNode.getBoundingClientRect();
-        return this.visibleRect(rect);
+    ScrollDepthMeter.prototype.makeGaugePointsArray = function(rect, interval) {
+        return Array.apply(null, Array(1 + 100 / interval)).map(function (_, i) {
+            return [
+                rect.height / 100 * (i * interval),
+                i * interval
+            ];
+        });
     };
 
-    ScrollDepthMeter.prototype.visibleRect = function(rect) {
+    ScrollDepthMeter.prototype.isRectVisible = function(rect) {
         return (
             this.DOMNode.offsetParent !== null &&
             rect.bottom >= 0 && 
@@ -124,11 +114,13 @@
         );
     };
 
+
     tracking.scrollDepthMeter = {
 
-        add: function(selector, id) {
+        add: function(selector, id, gaugePointInterval) {
             new ScrollDepthMeter(document.querySelector(selector), {
-                id: id
+                id: id,
+                gaugePointInterval: gaugePointInterval
             });
         },
 
@@ -138,6 +130,7 @@
                 breakpoint: true
             });
         }
+
     };
 
 })(this);
