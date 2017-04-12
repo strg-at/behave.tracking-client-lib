@@ -42,14 +42,14 @@
         };
     };
 
-    var ScrollDepthMeter = function(DOMNode, options) {
+    var BreakpointMeter = function(DOMNode, options) {
         this.DOMNode = DOMNode;
         this.options = options || {};
         this.id = options.id || DOMNode.nodeName + 
             ((DOMNode.id) ? "." + DOMNode.id : "");
         this.gaugePointInterval = (typeof options.gaugePointInterval === 'number') ?
             options.gaugePointInterval : DEFAULTS.GAUGE_POINT_INVERVAL;
-        if (this.options.breakpoint) {
+        if (this.options.simple) {
             this.scrollHandler = throttle(this.trackBreakPoint.bind(this), 200);
             this.scrollHandler();
         } else {
@@ -62,14 +62,14 @@
         window.addEventListener('scroll', this.scrollHandler);
     };
 
-    ScrollDepthMeter.prototype.trackBreakPoint = function() {
+    BreakpointMeter.prototype.trackBreakPoint = function() {
         var rect = this.DOMNode.getBoundingClientRect();
         if (!this.isRectVisible(rect)) { return; }
-        tracking.windowStateChange('scroll.breakpoint', this.id);
+        tracking.windowStateChange('breakpoint', this.id);
         window.removeEventListener('scroll', this.scrollHandler);
     };
 
-    ScrollDepthMeter.prototype.trackGaugePoints = function() {
+    BreakpointMeter.prototype.trackGaugePoints = function() {
         var self = this;
         var percent;
         var interval = self.gaugePointInterval;
@@ -85,7 +85,7 @@
         self.gaugePoints.filter(function(gp) {
             return gp && gp[0] <= scrollDepthPixelsBottom;
         }).forEach(function(gp) {
-            tracking.windowStateChange('scroll.percent.' + self.id, gp[1]);
+            tracking.windowStateChange('breakpoint.' + self.id + '.percent.max', gp[1]);
         });
         self.gaugePoints = self.gaugePoints.filter(function(gp) {
             return gp && gp[0] > scrollDepthPixelsBottom;
@@ -95,7 +95,7 @@
         }
     };
 
-    ScrollDepthMeter.prototype.makeGaugePointsArray = function(rect, interval) {
+    BreakpointMeter.prototype.makeGaugePointsArray = function(rect, interval) {
         return Array.apply(null, Array(1 + 100 / interval)).map(function (_, i) {
             return [
                 rect.height / 100 * (i * interval),
@@ -104,7 +104,7 @@
         });
     };
 
-    ScrollDepthMeter.prototype.isRectVisible = function(rect) {
+    BreakpointMeter.prototype.isRectVisible = function(rect) {
         return (
             this.DOMNode.offsetParent !== null &&
             rect.bottom >= 0 && 
@@ -115,19 +115,19 @@
     };
 
 
-    tracking.scrollDepthMeter = {
+    tracking.breakpointMeter = {
 
-        add: function(selector, id, gaugePointInterval) {
-            new ScrollDepthMeter(document.querySelector(selector), {
+        percent: function(selector, id, gaugePointInterval) {
+            new BreakpointMeter(document.querySelector(selector), {
                 id: id,
                 gaugePointInterval: gaugePointInterval
             });
         },
 
-        addBreakPoint: function(selector, id) {
-            new ScrollDepthMeter(document.querySelector(selector), {
+        simple: function(selector, id) {
+            new BreakpointMeter(document.querySelector(selector), {
                 id: id,
-                breakpoint: true
+                simple: true
             });
         }
 
