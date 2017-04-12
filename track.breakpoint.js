@@ -58,6 +58,7 @@
                 this.gaugePointInterval);
             this.scrollHandler = throttle(this.trackGaugePoints.bind(this),
                 DEFAULTS.THROTTLE_DELAY);
+            this.scrollHandler();
         }
         window.addEventListener('scroll', this.scrollHandler);
     };
