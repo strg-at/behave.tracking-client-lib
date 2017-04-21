@@ -16,9 +16,7 @@
     }
 
     if (visibilityChange) {
-        if (!document[hidden]) {
-            tracker.windowStateChange('window.active', !document[hidden]);
-        }
+        tracker.windowStateChange('window.active', !document[hidden]);
         document.addEventListener(visibilityChange, function() {
             tracker.windowStateChange('window.active', !document[hidden]);
         }, false);
