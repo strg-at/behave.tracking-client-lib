@@ -62,7 +62,7 @@
         connection = new window.WebSocket(endpoint);
 
         connection.onopen = function() {
-            connection.send(JSON.stringify([clientId, windowId, wasConnected]));
+            connection.send(JSON.stringify([new Date().getTime() - startTime, clientId, windowId, wasConnected]));
             wasConnected = true;
             flush();
         };
