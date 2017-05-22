@@ -1,5 +1,6 @@
 (function(window) {
 
+    /* eslint-env browser*/
     /* global screen, localStorage, sessionStorage, navigator */
 
     var generateRandomID = function generateRandomID() {
@@ -53,6 +54,11 @@
 
     function connect() {
 
+        if (connection) {
+            console.warn('Duplicate metrics connect!');
+            return;
+        }
+
         connection = new window.WebSocket(endpoint);
 
         connection.onopen = function() {
@@ -68,7 +74,7 @@
             }
         };
 
-    };
+    }
 
     var shuttingDown = false;
 
@@ -88,6 +94,8 @@
             flushTimeout = window.setTimeout(flush, 500);
         }
     };
+
+    var initialized = false;
 
     var startTime = new Date().getTime();
 
@@ -120,6 +128,11 @@
         },
 
         init: function init(endpointUrl) {
+            if (initialized) {
+                console.warn('Ignoring second initialization of strg.metrics!');
+                return;
+            }
+            initialized = true;
             if (endpointUrl) {
                 endpoint = endpointUrl;
             } else {
