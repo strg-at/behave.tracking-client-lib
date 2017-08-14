@@ -170,8 +170,6 @@
 
     tracker.windowStateChange('url', window.location.href);
 
-    tracker.windowStateChange('pathname', window.location.pathname);
-
     tracker.windowStateChange('referrer', document.referrer);
 
     if (window.location.hash) {
