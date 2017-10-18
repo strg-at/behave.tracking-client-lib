@@ -44,13 +44,24 @@
         }
         connection.send(JSON.stringify(queue));
         queue = [];
+        window.clearTimeout(keepAliveTimeout);
+        queueKeepalive();
     };
+
+    function queueKeepalive() {
+        keepAliveTimeout = window.setTimeout(function() {
+            connection.send(JSON.stringify([]));
+            queueKeepalive();
+        }, 10000);
+    }
 
     var endpoint;
 
     var connection = null;
 
     var wasConnected = false;
+
+    var keepAliveTimeout = null;
 
     function connect() {
 
