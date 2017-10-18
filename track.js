@@ -55,7 +55,10 @@
     function connect() {
 
         if (connection) {
-            console.warn('Duplicate metrics connect!');
+            if (console && typeof console.warn == 'function') {  // eslint-disable-line no-console
+                console.warn('Duplicate metrics connect');       // eslint-disable-line no-console
+            }
+            enqueue('metrics.error', 'Duplicate metrics connect');
             return;
         }
 
@@ -129,7 +132,10 @@
 
         init: function init(endpointUrl) {
             if (initialized) {
-                console.warn('Ignoring second initialization of strg.metrics!');
+                if (console && typeof console.warn == 'function') {            // eslint-disable-line no-console
+                    console.warn('Duplicate initialization of strg.metrics');  // eslint-disable-line no-console
+                }
+                enqueue('metrics.error', 'Duplicate metrics init');
                 return;
             }
             initialized = true;
