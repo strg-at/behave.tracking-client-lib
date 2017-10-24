@@ -177,6 +177,8 @@
         tracker.clientStateChange('screen.orientation', screen.orientation.type);
     }
 
+    tracker.clientStateChange('navigator.user_agent', navigator.userAgent);
+
     tracker.clientStateChange('navigator.language', navigator.language);
 
     if (navigator.systemLanguage) {
