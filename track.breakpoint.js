@@ -72,8 +72,6 @@
 
     BreakpointMeter.prototype.trackGaugePoints = function() {
         var self = this;
-        var percent;
-        var interval = self.gaugePointInterval;
         var rect = self.DOMNode.getBoundingClientRect();
         if (!self.isRectVisible(rect)) {
             return false;
