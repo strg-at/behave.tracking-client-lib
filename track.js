@@ -1,3 +1,6 @@
+/**
+ * @module strg/metrics
+ */
 (function(window) {
 
     /* eslint-env browser*/
@@ -115,32 +118,22 @@
 
     var tracker = {
 
-        clientStateChange: function clientStateChange(key, value) {
-            clientState = JSON.parse(localStorage.getItem('strg.metrics.client.state'));
-            if (clientState[key] === value) {
-                return;
-            }
-            clientState[key] = value;
-            localStorage.setItem('strg.metrics.client.state', JSON.stringify(clientState));
-            enqueue(key, value);
-        },
-
-        windowStateInit: function windowStateInit(key, value) {
-            windowState[key] = value;
-        },
-
-        windowStateChange: function windowStateChange(key, value) {
-            if (windowState[key] === value) {
-                return;
-            }
-            windowState[key] = value;
-            enqueue(key, value);
-        },
-
-        trigger: function trigger(name, data) {
-            enqueue(name, data);
-        },
-
+        /**
+         * Initialize metrics.
+         *
+         * This is the first thing, that needs to be called when using metrics.
+         * It should also be called at most once!
+         *
+         * The optional *endpointUrl* to the websocket server may start with a
+         * protocol description ("wss://..."). If it does not, the protocol
+         * will be prepended automatically, depending on the current connection
+         * security. If we are on an "https" domain, the protocol will be
+         * "wss://", otherwise it will be "ws://".
+         *
+         * If the value for *endpointUrl* is omitted, it defaults to the
+         * current domain, but on port 8081, with an auto-detected protocol as
+         * described above.
+         */
         init: function init(endpointUrl) {
             if (initialized) {
                 if (console && typeof console.warn == 'function') {            // eslint-disable-line no-console
@@ -161,6 +154,58 @@
                 endpoint = protocol + '://' + endpoint;
             }
             connect();
+        },
+
+        /**
+         * Unconditionally triggers an event with given key and value.
+         */
+        trigger: function trigger(key, value) {
+            enqueue(key, value);
+        },
+
+        /**
+         * Notifies metrics of a state change within the client.
+         *
+         * This function is similar to :js:func:`trigger`, but will only
+         * trigger the event, if the value is different than the value of the
+         * last call.
+         */
+        clientStateChange: function clientStateChange(key, value) {
+            clientState = JSON.parse(localStorage.getItem('strg.metrics.client.state'));
+            if (clientState[key] === value) {
+                return;
+            }
+            clientState[key] = value;
+            localStorage.setItem('strg.metrics.client.state', JSON.stringify(clientState));
+            enqueue(key, value);
+        },
+
+        /**
+         * Notifies metrics of a state change within the window.
+         *
+         * This function is similar to :js:func:`clientStateChange`, but has a
+         * different scope: It will "forget" all previous values on each page
+         * load.
+         */
+        windowStateChange: function windowStateChange(key, value) {
+            if (windowState[key] === value) {
+                return;
+            }
+            windowState[key] = value;
+            enqueue(key, value);
+        },
+
+        /**
+         * Sets the initial window state without triggering an event.
+         *
+         * This function is automatically used for storing the current location
+         * hash, for example. The function will the track changes to the
+         * location hash and call :js:func:`windowStateChange` once it changes.
+         * That function will the trigger the event, but only if it differs
+         * from its previous value (which was set here for the first time).
+         */
+        windowStateInit: function windowStateInit(key, value) {
+            windowState[key] = value;
         }
 
     };
