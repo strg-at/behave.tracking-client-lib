@@ -1,6 +1,6 @@
 (function(window) {
 
-    var tracking = strg.metrics;
+    var tracking = window.strg.metrics;
 
     var DEFAULTS = {
         THROTTLE_DELAY: 200,
