@@ -234,7 +234,9 @@
 
     tracker.windowStateChange('url', window.location.href);
 
-    tracker.windowStateChange('referrer', document.referrer);
+    if (document.referrer) {
+        tracker.windowStateChange('referrer', document.referrer);
+    }
 
     if (window.location.hash) {
         tracker.windowStateInit('url.hash', window.location.hash);
