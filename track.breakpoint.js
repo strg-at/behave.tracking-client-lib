@@ -95,12 +95,21 @@
     };
 
     BreakpointMeter.prototype.makeGaugePointsArray = function(rect, interval) {
-        return Array.apply(null, Array(1 + 100 / interval)).map(function (_, i) {
-            return [
-                rect.height / 100 * (i * interval),
-                i * interval
-            ];
-        });
+        var result = [], percent, i;
+        for (i = interval; i <= 100; i += interval) {
+            percent = i / 100;
+            result.push([
+                rect.height * percent,
+                percent * 100
+            ]);
+        }
+        if (i != 100 + interval) {
+            result.push([
+                rect.height,
+                100
+            ]);
+        }
+        return result;
     };
 
     BreakpointMeter.prototype.isRectVisible = function(rect) {
