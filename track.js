@@ -28,7 +28,7 @@
         sessionStorage.setItem('strg.metrics.session', sessionId);
     }
 
-    var windowId = generateRandomId();
+    var windowId = generateRandomID();
     sessionStorage.setItem('strg.metrics.window', windowId);
 
     var windowState = {};
