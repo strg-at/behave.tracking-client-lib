@@ -1,6 +1,14 @@
+/**
+ * @module strg/metrics/visibility
+ */
 (function() {
 
-    var tracker = strg.metrics;
+    /* eslint-env browser*/
+
+    var GLOBAL_NAME = window.strgMetricsId || 'strg';
+    var tracker = window[GLOBAL_NAME].metrics;
+
+    tracker.visibility = {};
 
     var hidden, visibilityChange;
 
@@ -15,11 +23,13 @@
         visibilityChange = "webkitvisibilitychange";
     }
 
-    if (visibilityChange) {
-        tracker.windowStateChange('window.active', !document[hidden]);
-        document.addEventListener(visibilityChange, function() {
-            tracker.windowStateChange('window.active', !document[hidden]);
-        }, false);
-    }
+    tracker.visibility.init = function() {
+      if (visibilityChange) {
+          tracker.windowStateChange('window.active', !document[hidden]);
+          document.addEventListener(visibilityChange, function() {
+              tracker.windowStateChange('window.active', !document[hidden]);
+          }, false);
+      }
+    };
 
 })();

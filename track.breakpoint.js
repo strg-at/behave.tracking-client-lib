@@ -1,6 +1,12 @@
+/**
+ * @module strg/metrics/breakpoint
+ */
 (function(window) {
 
-    var tracking = window.strg.metrics;
+    /* eslint-env browser*/
+
+    var GLOBAL_NAME = window.strgMetricsId || 'strg';
+    var tracker = window[GLOBAL_NAME].metrics;
 
     var DEFAULTS = {
         THROTTLE_DELAY: 200,
@@ -45,7 +51,7 @@
     var BreakpointMeter = function(DOMNode, options) {
         this.DOMNode = DOMNode;
         this.options = options || {};
-        this.id = options.id || DOMNode.nodeName + 
+        this.id = options.id || DOMNode.nodeName +
             ((DOMNode.id) ? "." + DOMNode.id : "");
         this.gaugePointInterval = (typeof options.gaugePointInterval === 'number') ?
             options.gaugePointInterval : DEFAULTS.GAUGE_POINT_INVERVAL;
@@ -66,7 +72,7 @@
     BreakpointMeter.prototype.trackBreakPoint = function() {
         var rect = this.DOMNode.getBoundingClientRect();
         if (!this.isRectVisible(rect)) { return; }
-        tracking.windowStateChange('breakpoint', this.id);
+        tracker.windowStateChange('breakpoint', this.id);
         window.removeEventListener('scroll', this.scrollHandler);
     };
 
@@ -76,15 +82,15 @@
         if (!self.isRectVisible(rect)) {
             return false;
         }
-        var viewPortHeight = (window.innerHeight || 
+        var viewPortHeight = (window.innerHeight ||
             document.documentElement.clientHeight);
-        var scrollDepthPixelsBottom = rect.height ? 
-            Math.max(0, Math.min(viewPortHeight - rect.top, rect.height)) : 
+        var scrollDepthPixelsBottom = rect.height ?
+            Math.max(0, Math.min(viewPortHeight - rect.top, rect.height)) :
             Math.max(0, Math.min(viewPortHeight - rect.top, 1));
         self.gaugePoints.filter(function(gp) {
             return gp && gp[0] <= scrollDepthPixelsBottom;
         }).forEach(function(gp) {
-            tracking.windowStateChange('breakpoint.' + self.id + '.percent.max', gp[1]);
+            tracker.windowStateChange('breakpoint.' + self.id + '.percent.max', gp[1]);
         });
         self.gaugePoints = self.gaugePoints.filter(function(gp) {
             return gp && gp[0] > scrollDepthPixelsBottom;
@@ -115,15 +121,15 @@
     BreakpointMeter.prototype.isRectVisible = function(rect) {
         return (
             this.DOMNode.offsetParent !== null &&
-            rect.bottom >= 0 && 
-            rect.right >= 0 && 
-            rect.top <= (window.innerHeight || document.documentElement.clientHeight) && 
+            rect.bottom >= 0 &&
+            rect.right >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
             rect.left <= (window.innerWidth || document.documentElement.clientWidth)
         );
     };
 
 
-    tracking.breakpointMeter = {
+    tracker.breakpointMeter = {
 
         percent: function(selector, id, gaugePointInterval) {
             new BreakpointMeter(document.querySelector(selector), {
