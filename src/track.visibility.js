@@ -1,7 +1,7 @@
 /**
  * @module strg/metrics/visibility
  */
-(function() {
+(function () {
 
     /* eslint-env browser*/
 
@@ -23,13 +23,13 @@
         visibilityChange = "webkitvisibilitychange";
     }
 
-    tracker.visibility.init = function() {
-      if (visibilityChange) {
-          tracker.windowStateChange('window.active', !document[hidden]);
-          document.addEventListener(visibilityChange, function() {
-              tracker.windowStateChange('window.active', !document[hidden]);
-          }, false);
-      }
+    tracker.visibility.init = function () {
+        if (visibilityChange) {
+            tracker.windowStateChange('window.active', !document[hidden]);
+            document.addEventListener(visibilityChange, function () {
+                tracker.windowStateChange('window.active', !document[hidden]);
+            }, false);
+        }
     };
 
 })();
