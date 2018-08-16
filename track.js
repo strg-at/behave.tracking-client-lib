@@ -70,7 +70,9 @@
      * Update the client hash to a value sent from the server.
      */
     updateClientHash: function updateClientHash (newHash) {
-      if (!isUuid(newHash)) return;
+      if (!isUuid(newHash)) {
+        throw Error('Value Error: "' + newHash + '" is not a valid UUID');
+      }
       clientHash = newHash;
       localStorage.setItem('strg.metrics.client', newHash);
     }
