@@ -1,0 +1,15 @@
+{
+  "name": "strg.metrics.tracking.client",
+  "version": "0.1.0",
+  "description": "Tracking Client Modules",
+  "main": "src/track.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./src"
+  },
+  "author": "Ralf Traunsteiner <ralf@strg.at>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "eslint": "^5.0.1"
+  }
+}
