@@ -21,6 +21,10 @@
     return uuid;
   }
 
+  function isUuid(s) {
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(s);
+  }
+
   /**
    * The global object would already be declared by an inline snippet.
    * Similar to GA we stores a identifier in an other global: `strgMetricsId`.
@@ -54,6 +58,23 @@
   var windowState = {};
   var queue = [];
   var clientState;
+
+  /**
+   * Remote scripts
+   *
+   * Scripts that can be called from the server to update client data.
+   * Currently used for data migrations e.g. upgrading the client hash.
+   */
+  var remoteScripts = {
+    /**
+     * Update the client hash to a value sent from the server.
+     */
+    updateClientHash: function updateClientHash (newHash) {
+      if (!isUuid(newHash)) return;
+      clientHash = newHash;
+      localStorage.setItem('strg.metrics.client', newHash);
+    }
+  };
 
   /**
    * Flush events in queue as single frames.
@@ -100,6 +121,16 @@
       if (!shuttingDown) {
         connection = null;
         window.setTimeout(connect, 500);
+      }
+    };
+
+    /**
+     * Handle server side scripts
+     */
+    connection.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      if (data && typeof remoteScripts[data.fn] === 'function') {
+        remoteScripts[data.fn].apply(null, [].concat(data.params));
       }
     };
   }
