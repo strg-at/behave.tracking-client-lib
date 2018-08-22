@@ -6,6 +6,8 @@
   /* eslint-env browser*/
   /* global screen, localStorage, sessionStorage, navigator */
 
+  var RECONNECT_TIMEOUT = 2000;
+
   /**
    * uuid4 implementation taken from:
    * https://www.w3resource.com/javascript-exercises/javascript-math-exercise-23.php
@@ -122,7 +124,7 @@
     connection.onclose = function () {
       if (!shuttingDown) {
         connection = null;
-        window.setTimeout(connect, 500);
+        window.setTimeout(connect, RECONNECT_TIMEOUT);
       }
     };
 
