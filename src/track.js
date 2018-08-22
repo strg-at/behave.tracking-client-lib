@@ -51,7 +51,7 @@
   }
 
   var sessionHash = sessionStorage.getItem('strg.metrics.session');
-  if (!sessionHash) {
+  if (!sessionHash || !isUuid(sessionHash)) {
     sessionHash = uuid4();
     sessionStorage.setItem('strg.metrics.session', sessionHash);
   }
