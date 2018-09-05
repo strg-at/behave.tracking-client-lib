@@ -74,7 +74,7 @@
     BreakpointMeter.prototype.trackBreakPoint = function () {
         var rect = this.DOMNode.getBoundingClientRect();
         if (!this.isRectVisible(rect)) { return; }
-        tracker.windowStateChange('breakpoint.' + this.key, this.value);
+        tracker.windowStateChange(this.key, this.value);
         window.removeEventListener('scroll', this.scrollHandler);
     };
 
