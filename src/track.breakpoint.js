@@ -53,6 +53,8 @@
         this.options = options || {};
         this.id = options.id || DOMNode.nodeName +
             ((DOMNode.id) ? "." + DOMNode.id : "");
+        this.key = options.key || 'breakpoint.' + this.id;
+        this.value = options.value || null;
         this.gaugePointInterval = (typeof options.gaugePointInterval === 'number') ?
             options.gaugePointInterval : DEFAULTS.GAUGE_POINT_INVERVAL;
         if (this.options.simple) {
@@ -72,7 +74,7 @@
     BreakpointMeter.prototype.trackBreakPoint = function () {
         var rect = this.DOMNode.getBoundingClientRect();
         if (!this.isRectVisible(rect)) { return; }
-        tracker.windowStateChange('breakpoint', this.id);
+        tracker.windowStateChange('breakpoint.' + this.key, this.value);
         window.removeEventListener('scroll', this.scrollHandler);
     };
 
@@ -138,10 +140,14 @@
             });
         },
 
-        simple: function (selector, id) {
+        simple: function (selector, key, value) {
             new BreakpointMeter(document.querySelector(selector), {
-                id: id,
-                simple: true
+                id: key,
+                key: key,
+                simple: true,
+                value: typeof value !== 'undefined' ?
+                    value :
+                    '1'
             });
         }
 
