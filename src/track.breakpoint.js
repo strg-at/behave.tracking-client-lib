@@ -130,24 +130,29 @@
     );
   };
 
-
   tracker.breakpointMeter = {
 
     percent: function (selector, id, gaugePointInterval) {
-      new BreakpointMeter(document.querySelector(selector), {
+      var DOMNode = typeof selector === 'string'
+        ? document.querySelector(selector)
+        : selector;
+      new BreakpointMeter(DOMNode, {
         id: id,
         gaugePointInterval: gaugePointInterval
       });
     },
 
     simple: function (selector, key, value) {
-      new BreakpointMeter(document.querySelector(selector), {
+      var DOMNode = typeof selector === 'string'
+        ? document.querySelector(selector)
+        : selector;
+      new BreakpointMeter(DOMNode, {
         id: key,
         key: key,
         simple: true,
-        value: typeof value !== 'undefined' ?
-          value :
-          '1'
+        value: typeof value !== 'undefined'
+          ? value
+          : '1'
       });
     }
 
