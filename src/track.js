@@ -1,5 +1,6 @@
 /**
- * @module strg/metrics
+ * @global
+ * @name strg
  */
 (function (window) {
 
@@ -28,9 +29,9 @@
   }
 
   /**
-   * The global object would already be declared by an inline snippet.
-   * Similar to GA we stores a identifier in an other global: `strgMetricsId`.
-   * Defaults to 'strg'.
+   * The global object would already be declared by an inline snippet. Similar
+   * to GA we stores a identifier in an other global: `strgMetricsId`. Defaults
+   * to 'strg'.
    */
   var GLOBAL_NAME = window.strgMetricsId || 'strg';
   window[GLOBAL_NAME] = window[GLOBAL_NAME] || {};
@@ -69,7 +70,10 @@
    */
   var remoteScripts = {
     /**
-     * Update the client hash to a value sent from the server.
+     * @callback updateClientHash
+     * @description Callback triggered by the WebSocket. Update the client
+     * hash to a value sent from the server.
+     * @param {string} newHash - New hash, must be valid uuid4
      */
     updateClientHash: function updateClientHash (newHash) {
       if (!isUuid(newHash)) {
@@ -151,7 +155,8 @@
   });
 
   /**
-   * Adds events to the queue and sets the time delta for when the event was triggered.
+   * @description Adds events to the queue and sets the time delta for when the
+   * event was triggered.
    * @param {string} key - The event name, e.g. 'article.id'.
    * @param {string|number} value - The events value, e.g. 'Art-123456'
    */
@@ -166,19 +171,24 @@
 
   var startTime = window[GLOBAL_NAME].t || 1 * new Date();  // Try to fetch from global
 
+  /**
+   * @class
+   * @name metrics
+   */
   var tracker = {
     /**
-     * Initialize metrics.
+     * @function init
+     * @memberof strg.metrics#
+     * @summary Initialize metrics.
      * @param {string} url - *endpoint URL* for the websocket server.
-     *
-     * This is the first thing, that needs to be called when using metrics.
-     * It should also be called at most once!
+     * @description This is the first thing, that needs to be called when using
+     * metrics. It should also be called at most once!
      *
      * The *url* to the websocket server may start with aprotocol description
      * ("wss://..."). If it does not, the protocol will be prepended
-     * automatically, depending on the current connection security.
-     * If we are on an "https" domain, the protocol will be "wss://",
-     * otherwise it will be "ws://".
+     * automatically, depending on the current connection security. If we are on
+     * an "https" domain, the protocol will be "wss://", otherwise it will be
+     * "ws://".
      */
     init: function init(url) {
       if (!url) {
@@ -193,7 +203,9 @@
     },
 
     /**
-     * Unconditionally triggers an event with given key and value.
+     * @function trigger
+     * @memberof strg.metrics#
+     * @description Unconditionally triggers an event with given key and value.
      * @param {string} key - The event name, e.g. 'article.id'.
      * @param {string|number} value - The events value, e.g. 'Art-123456'
      */
@@ -202,11 +214,12 @@
     },
 
     /**
-     * Notifies metrics of a state change within the client.
+     * @function clientStateChange
+     * @memberof strg.metrics#
+     * @summary Notifies metrics of a state change within the client.
      * @param {string} key - The event name.
      * @param {string|number} value - The event value.
-     *
-     * This function is similar to :js:func:`trigger`, but will only
+     * @description This function is similar to :js:func:`trigger`, but will only
      * trigger the event, if the value is different than the value of the
      * last call.
      */
@@ -221,13 +234,14 @@
     },
 
     /**
-     * Notifies metrics of a state change within the window.
+     * @function windowStateChange
+     * @memberof strg.metrics#
+     * @summary Notifies metrics of a state change within the window.
      * @param {string} key - The event name.
      * @param {string|number} value - The event value.
-     *
-     * This function is similar to :js:func:`clientStateChange`, but has a
-     * different scope: It will "forget" all previous values on each page
-     * load.
+     * @description This function is similar to :js:func:`clientStateChange`,
+     * but has a different scope: It will "forget" all previous values on each
+     * page load.
      */
     windowStateChange: function windowStateChange(key, value) {
       if (windowState[key] === value) {
@@ -238,12 +252,14 @@
     },
 
     /**
-     * Sets the initial window state without triggering an event.
+     * @function windowStateInit
+     * @memberof strg.metrics#
+     * @summary Sets the initial window state without triggering an event.
      * @param {string} key - The event name.
      * @param {string|number} value - The event value.
-     *
-     * So calling :js:func:`windowStateChange` will only trigger the event
-     * if it differs from the value previously set with this function.
+     * @description
+     * So calling :js:func:`windowStateChange` will only trigger the event if it
+     * differs from the value previously set with this function.
      */
     windowStateInit: function windowStateInit(key, value) {
       windowState[key] = value;
