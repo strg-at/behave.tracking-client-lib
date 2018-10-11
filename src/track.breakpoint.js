@@ -59,6 +59,7 @@
       options.gaugePointInterval : DEFAULTS.GAUGE_POINT_INVERVAL;
     if (this.options.simple) {
       this.scrollHandler = throttle(this.trackBreakPoint.bind(this), 200);
+      window.addEventListener('scroll', this.scrollHandler);
       this.scrollHandler();
     } else {
       this.gaugePoints = this.makeGaugePointsArray(
@@ -66,9 +67,9 @@
         this.gaugePointInterval);
       this.scrollHandler = throttle(this.trackGaugePoints.bind(this),
         DEFAULTS.THROTTLE_DELAY);
+      window.addEventListener('scroll', this.scrollHandler);
       this.scrollHandler();
     }
-    window.addEventListener('scroll', this.scrollHandler);
   };
 
   BreakpointMeter.prototype.trackBreakPoint = function () {
