@@ -88,7 +88,6 @@
    * Flush events in queue as single frames.
    */
   function flush () {
-    flushTimeout = null;
     if (!connection || connection.readyState != window.WebSocket.OPEN) {
       // this function will be called again once the connection is open
       return;
@@ -97,7 +96,7 @@
       connection.send(JSON.stringify(queue[0]));
       queue.shift();
     }
-  };
+  }
 
   var endpoint;
   var connection = null;
@@ -167,7 +166,7 @@
       value: value
     });
     flush();  // Immediate flush with no timeout
-  };
+  }
 
   var startTime = window[GLOBAL_NAME].t || 1 * new Date();  // Try to fetch from global
 
