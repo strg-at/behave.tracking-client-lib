@@ -36,6 +36,29 @@
   var GLOBAL_NAME = window.strgMetricsId || 'strg';
   window[GLOBAL_NAME] = window[GLOBAL_NAME] || {};
 
+  var logger = {
+   log: function () {
+      window[GLOBAL_NAME].logger &&
+        window[GLOBAL_NAME].logger.log
+        .apply(null, arguments);
+    },
+    info: function () {
+      window[GLOBAL_NAME].logger &&
+        window[GLOBAL_NAME].logger.info
+        .apply(null, arguments);
+    },
+    warn: function () {
+      window[GLOBAL_NAME].logger &&
+        window[GLOBAL_NAME].logger.warn
+        .apply(null, arguments);
+    },
+    error: function () {
+      window[GLOBAL_NAME].logger &&
+        window[GLOBAL_NAME].logger.error
+        .apply(null, arguments);
+    },
+  };
+
   /**
    * Prepare life-cycle hashes for client, session and window.
    *   - `clientHash` is bound to `window.localStorage`.
@@ -88,12 +111,15 @@
    * Flush events in queue as single frames.
    */
   function flush () {
-    if (!connection || connection.readyState != window.WebSocket.OPEN) {
+    if (!connection || connection.readyState !== window.WebSocket.OPEN) {
       // this function will be called again once the connection is open
+      logger.log('Connection not ready');
       return;
     }
     while (queue.length) {
-      connection.send(JSON.stringify(queue[0]));
+      var msg = JSON.stringify(queue[0]);
+      logger.log('Send', msg);
+      connection.send(msg);
       queue.shift();
     }
   }
@@ -102,22 +128,25 @@
   var connection = null;
   var shuttingDown = false;
 
+  function createQueryParams() {
+    return [
+      '?client=', clientHash,
+      '&session=', sessionHash,
+      '&window=', windowHash,
+      '&delta=', 1 * new Date() - startTime,
+    ].join('');
+  }
+
   /**
    * Open connection to the WebSocket, handle reconnects and first frame.
    */
   function connect() {
-    connection = new window.WebSocket(endpoint);
+    connection = new window.WebSocket(endpoint + createQueryParams());
 
     /**
      * On connection open always send the first frame with the three hashes.
      */
     connection.onopen = function () {
-      connection.send(JSON.stringify({
-        delta: 1 * new Date() - startTime,
-        client: clientHash,
-        session: sessionHash,
-        window: windowHash
-      }));
       flush();
     };
 
@@ -160,6 +189,7 @@
    * @param {string|number} value - The events value, e.g. 'Art-123456'
    */
   function enqueue(key, value) {
+    logger.log('Enqueue', key, value);
     queue.push({
       delta: 1 * new Date() - startTime,
       key: key,
