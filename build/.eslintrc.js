@@ -21,5 +21,7 @@ module.exports = {
     'no-var': ["error"],
     // allow comma-dangle
     "comma-dangle": ["error", "only-multiline"],
+    "node/no-unpublished-require": "off",
+    "node/no-extraneous-require": "off",
   }
 }

@@ -1,20 +1,41 @@
+// eslint-disable-next-line node/no-extraneous-require
+require('dotenv').config()
 const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack')
 const path = require('path')
+
+const entry = ['./track.js']
+const modules = typeof process.env.MODULES === 'string'
+  ? process.env.MODULES.split(',').filter(e => !!e).map(e => e.trim())
+  : []
+
+const outputPath = process.env.OUTPUT_PATH
+  ? process.env.OUTPUT_PATH
+  : '../dist/'
+
+console.log(process.env.OUTPUT_PATH)
+
+modules
+  .map(e => `./${e}.js`)
+  .forEach(e => entry.push(e))
+
+modules.forEach(e => console.log(`Including module: ${e}`))
 
 webpack({
   // Configuration Object
   mode: 'production',
   context: path.resolve(__dirname, '../src/'),
-  entry: [
-    './track.js',
-    './track.visibility.js',
-    './track.breakpoint.js',
-  ],
-  // entry: 'test.js',
+  entry,
   output: {
-    path: path.resolve(__dirname, '../dist/'),
+    path: path.resolve(__dirname, outputPath),
     filename: 'track.js'
   },
+  plugins: [
+    new Dotenv({
+      path: '../.env',
+      silent: true
+    })
+  ],
   module: {
     rules: [
       {
