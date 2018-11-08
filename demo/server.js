@@ -6,4 +6,4 @@ const port = 8000
 
 app.use('/', express.static(path.join(__dirname, '.')))
 
-app.listen(port, () => console.log(`\nDemo app listening on http://localhost:${port}`))
+app.listen(port, () => console.log(`\nDemo app listening on http://localhost:${port}/demo.html`))

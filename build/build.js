@@ -13,8 +13,6 @@ const outputPath = process.env.OUTPUT_PATH
   ? process.env.OUTPUT_PATH
   : '../dist/'
 
-console.log(process.env.OUTPUT_PATH)
-
 modules
   .map(e => `./${e}.js`)
   .forEach(e => entry.push(e))
