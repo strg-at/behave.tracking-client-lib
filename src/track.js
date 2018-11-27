@@ -24,6 +24,10 @@
     return uuid;
   }
 
+  /**
+   * @description Test for any uuid
+   * @param {String} s - UUID string
+   */
   function isUuid(s) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(s);
   }
@@ -36,54 +40,89 @@
   var GLOBAL_NAME = window.strgMetricsId || 'strg';
   window[GLOBAL_NAME] = window[GLOBAL_NAME] || {};
 
+  /**
+   * Logger can be anything that implements log, info, warn and error functions.
+   * So setting e.g. ```window.strg.loggerHandler = console``` will log to browser
+   * console in runtime.
+   */
   var logger = {
-   log: function () {
-      window[GLOBAL_NAME].logger &&
-        window[GLOBAL_NAME].logger.log
-        .apply(null, arguments);
+    _msg: function (args) {
+      var css = [
+        'background: transparent;',  // reset
+        'color: #FFF; background: #f2c109; border-radius:2px; padding: 0 6px;',  // log
+      ];
+      return ['%cstrg%c', css[1], css[0]].concat(args);
+    },
+    log: function () {
+      var args = Array.prototype.slice.call(arguments);
+      window[GLOBAL_NAME].loggerHandler &&
+        window[GLOBAL_NAME].loggerHandler.log
+        .apply(null, this._msg(args));
     },
     info: function () {
-      window[GLOBAL_NAME].logger &&
-        window[GLOBAL_NAME].logger.info
-        .apply(null, arguments);
+      var args = Array.prototype.slice.call(arguments);
+      window[GLOBAL_NAME].loggerHandler &&
+        window[GLOBAL_NAME].loggerHandler.info
+        .apply(null, this._msg(args));
     },
     warn: function () {
-      window[GLOBAL_NAME].logger &&
-        window[GLOBAL_NAME].logger.warn
-        .apply(null, arguments);
+      var args = Array.prototype.slice.call(arguments);
+      window[GLOBAL_NAME].loggerHandler &&
+        window[GLOBAL_NAME].loggerHandler.warn
+        .apply(null, this._msg(args));
     },
     error: function () {
-      window[GLOBAL_NAME].logger &&
-        window[GLOBAL_NAME].logger.error
-        .apply(null, arguments);
+      var args = Array.prototype.slice.call(arguments);
+      window[GLOBAL_NAME].loggerHandler &&
+        window[GLOBAL_NAME].loggerHandler.error
+        .apply(null, this._msg(args));
     },
   };
 
+  window[GLOBAL_NAME].logger = logger;
+
   /**
-   * Prepare life-cycle hashes for client, session and window.
+   * Get start time, try to retrieve from global object (if loder-snippet was
+   * used)
+   */
+  var startTime = window[GLOBAL_NAME].t || 1 * new Date();
+
+  /**
+   * Init top scope variables
+   */
+  var connection = null;
+  var shuttingDown = false;
+  var windowState = {};
+  var queue = [];
+  var clientState;
+  var clientHash;
+  var sessionHash;
+  var windowHash;
+
+  /**
+   * @description Prepare life-cycle hashes for client, session and window.
    *   - `clientHash` is bound to `window.localStorage`.
    *   - `sessionHash` is bound to `window.sessionStorage`.
    *   - `windowHash` is bound to the current JS scope `window`.
    */
-  var clientHash = localStorage.getItem('strg.metrics.client');
-  if (!clientHash) {
-    clientHash = uuid4();
-    localStorage.setItem('strg.metrics.client', clientHash);
-    localStorage.setItem('strg.metrics.client.state', '{}');
-  } else if (!localStorage.getItem('strg.metrics.client.state')) {
-    localStorage.setItem('strg.metrics.client.state', '{}');
-  }
+  function syncHashes () {
+    clientHash = localStorage.getItem('strg.metrics.client');
+    if (!clientHash) {
+      clientHash = uuid4();
+      localStorage.setItem('strg.metrics.client', clientHash);
+      localStorage.setItem('strg.metrics.client.state', '{}');
+    } else if (!localStorage.getItem('strg.metrics.client.state')) {
+      localStorage.setItem('strg.metrics.client.state', '{}');
+    }
 
-  var sessionHash = sessionStorage.getItem('strg.metrics.session');
-  if (!sessionHash || !isUuid(sessionHash)) {
-    sessionHash = uuid4();
-    sessionStorage.setItem('strg.metrics.session', sessionHash);
-  }
+    sessionHash = sessionStorage.getItem('strg.metrics.session');
+    if (!sessionHash || !isUuid(sessionHash)) {
+      sessionHash = uuid4();
+      sessionStorage.setItem('strg.metrics.session', sessionHash);
+    }
 
-  var windowHash = window[GLOBAL_NAME].window = window[GLOBAL_NAME].window || uuid4();
-  var windowState = {};
-  var queue = [];
-  var clientState;
+    windowHash = window[GLOBAL_NAME].window = window[GLOBAL_NAME].window || uuid4();
+  }
 
   /**
    * Remote scripts
@@ -113,7 +152,6 @@
   function flush () {
     if (!connection || connection.readyState !== window.WebSocket.OPEN) {
       // this function will be called again once the connection is open
-      logger.log('Connection not ready');
       return;
     }
     while (queue.length) {
@@ -124,23 +162,25 @@
     }
   }
 
-  var endpoint;
-  var connection = null;
-  var shuttingDown = false;
-
   function createQueryParams() {
+    var delta = 1 * new Date() - startTime;
+    logger.log('Client:', clientHash);
+    logger.log('Session:', sessionHash);
+    logger.log('Window:', windowHash);
+    logger.log('Delta:', delta);
     return [
       '?client=', clientHash,
       '&session=', sessionHash,
       '&window=', windowHash,
-      '&delta=', 1 * new Date() - startTime,
+      '&delta=', delta,
     ].join('');
   }
 
   /**
    * Open connection to the WebSocket, handle reconnects and first frame.
    */
-  function connect() {
+  function connect(endpoint) {
+    logger.log('Open connection:', endpoint);
     connection = new window.WebSocket(endpoint + createQueryParams());
 
     /**
@@ -198,7 +238,6 @@
     flush();  // Immediate flush with no timeout
   }
 
-  var startTime = window[GLOBAL_NAME].t || 1 * new Date();  // Try to fetch from global
 
   /**
    * @class
@@ -223,12 +262,13 @@
       if (!url) {
         throw Error('Configuration Error: Missing endpoint url');
       }
-      endpoint = url;
+      var endpoint = url;
+      syncHashes();
       if (endpoint.indexOf('://') === -1) {
         var protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
         endpoint = protocol + '://' + endpoint;
       }
-      connect();
+      connect(endpoint);
     },
 
     /**

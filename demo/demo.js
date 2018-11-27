@@ -3,7 +3,7 @@
 
   var tracker = window.strg.metrics;
 
-  window.strg.logger = console;
+  window.strg.loggerHandler = console;
 
   tracker.init('ws://localhost:8008');
   tracker.visibility.init();
