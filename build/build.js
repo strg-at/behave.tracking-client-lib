@@ -12,6 +12,7 @@ const modules = typeof process.env.MODULES === 'string'
 const outputPath = process.env.OUTPUT_PATH
   ? process.env.OUTPUT_PATH
   : '../dist/'
+const watch = !!process.env.WATCH
 
 modules
   .map(e => `./${e}.js`)
@@ -22,6 +23,7 @@ modules.forEach(e => console.log(`Including module: ${e}`))
 webpack({
   // Configuration Object
   mode: 'production',
+  watch,
   context: path.resolve(__dirname, '../src/'),
   entry,
   output: {
