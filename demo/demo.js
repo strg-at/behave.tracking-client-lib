@@ -5,8 +5,8 @@
 
   window.strg.logger = console;
 
-  tracker.init('ws://35.204.167.129:3000');
-  // tracker.visibility.init();
+  tracker.init('ws://localhost:8008');
+  tracker.visibility.init();
 
   // /* ClientState */
   tracker.clientStateChange('screen.resolution', screen.width + "x" + screen.height);
@@ -26,6 +26,8 @@
   window.addEventListener("hashchange", function () {
     tracker.windowStateChange('url.hash', window.location.hash);
   });
+
+  window.strg.metrics.breakpointMeter.percent('.article__body', 'article');
 
   // var articleId = parseArticleId(location.href);
   // articleId && window.strg.metrics.windowStateChange('article.id', articleId);
