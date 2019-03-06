@@ -16,7 +16,7 @@ export function createTracker (global, deps) {
     logger = createNoOpLogger()
   } = deps
 
-  let RECONNECT_TIMEOUT = process.env.RECONNECT_TIMEOUT || 2000
+  const RECONNECT_TIMEOUT = process.env.RECONNECT_TIMEOUT || 2000
 
   /**
    * Init top scope variables
@@ -127,7 +127,7 @@ export function createTracker (global, deps) {
     connection.onclose = function () {
       if (!shuttingDown) {
         connection = null
-        global.setTimeout(connect, RECONNECT_TIMEOUT)
+        global.setTimeout(() => connect(endpoint), RECONNECT_TIMEOUT)
       }
     }
 
@@ -139,6 +139,13 @@ export function createTracker (global, deps) {
       if (data && typeof remoteScripts[data.fn] === 'function') {
         remoteScripts[data.fn].apply(null, [].concat(data.params))
       }
+    }
+
+    /**
+     * Handle errors quietly
+     */
+    connection.onerror = function (e) {
+      logger.error('Connection failed', e)
     }
   }
 
