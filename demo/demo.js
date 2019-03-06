@@ -1,12 +1,13 @@
 /* eslint-env browser */
 (function () {
 
-  var tracker = window.strg.metrics;
+  var global = window.strgBeHave
+  var tracker = global.tracker;
 
-  window.strg.loggerHandler = console;
+  global.loggerHandler = console;
 
   tracker.init('ws://localhost:8008');
-  tracker.visibility.init();
+  tracker.visibilityTracker.init();
 
   // /* ClientState */
   tracker.clientStateChange('screen.resolution', screen.width + "x" + screen.height);
@@ -27,14 +28,14 @@
     tracker.windowStateChange('url.hash', window.location.hash);
   });
 
-  window.strg.metrics.breakpointMeter.percent('.article__body', 'article');
+  global.tracker.breakpointMeter.percent('.article__body', 'article');
 
   // var articleId = parseArticleId(location.href);
-  // articleId && window.strg.metrics.windowStateChange('article.id', articleId);
+  // articleId && global.metrics.windowStateChange('article.id', articleId);
 
   // var articleSelector = 'article[id="article-' + articleId +'"]';
   // if (document.querySelector(articleSelector)) {
-  //   window.strg.metrics.breakpointMeter.percent(articleSelector, 'article');
+  //   global.metrics.breakpointMeter.percent(articleSelector, 'article');
   // }
 
 })();
