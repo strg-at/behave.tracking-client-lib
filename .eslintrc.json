@@ -1,9 +1,0 @@
-{
-  "parserOptions": {
-      "ecmaVersion": 5
-  },
-  "extends": "eslint:recommended",
-  "rules": {
-      "semi": 2
-  }
-}
