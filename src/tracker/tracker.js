@@ -1,4 +1,5 @@
 import { uuid4, isUuid } from '../utils/utils'
+import { createNoOpLogger } from '../logger/logger'
 
 /**
  * @function createTracker
@@ -10,10 +11,10 @@ import { uuid4, isUuid } from '../utils/utils'
  * - Get rid of final global dependencies
  */
 export function createTracker (global, deps) {
-  const { startTime, logger } = deps
-
-  /* eslint-env browser */
-  /* global screen, localStorage, sessionStorage, navigator */
+  const {
+    startTime,
+    logger = createNoOpLogger()
+  } = deps
 
   let RECONNECT_TIMEOUT = process.env.RECONNECT_TIMEOUT || 2000
 

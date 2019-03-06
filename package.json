@@ -5,8 +5,8 @@
   "main": "src/track.js",
   "scripts": {
     "build": "node build/build.js",
-    "build:demo": "cross-env OUTPUT_PATH=\"../demo/\" WATCH=true npm run build",
-    "demo": "cross-env NODE_ENV=development npm run build:demo & node demo/server.js",
+    "build:dev": "cross-env OUTPUT_PATH=\"../demo/\" WATCH=true npm run build",
+    "dev": "cross-env NODE_ENV=development npm run build:dev & node demo/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src"
   },
