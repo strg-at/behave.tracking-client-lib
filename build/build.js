@@ -4,43 +4,42 @@ const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
-const entry = ['./track.js']
-const modules = typeof process.env.MODULES === 'string'
-  ? process.env.MODULES.split(',').filter(e => !!e).map(e => e.trim())
-  : []
-
 const outputPath = process.env.OUTPUT_PATH
   ? process.env.OUTPUT_PATH
   : '../dist/'
 const watch = !!process.env.WATCH
 
-modules
-  .map(e => `./${e}.js`)
-  .forEach(e => entry.push(e))
-
-modules.forEach(e => console.log(`Including module: ${e}`))
-
 webpack({
   // Configuration Object
   mode: 'production',
+  devtool: process.env.NODE_ENV === 'development'
+    ? 'inline-source-map'
+    : false,
   watch,
-  context: path.resolve(__dirname, '../src/'),
-  entry,
+  // context: path.resolve(__dirname, '../src/'),
+  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, outputPath),
     filename: 'track.js'
   },
   plugins: [
-    new Dotenv({
-      path: '../.env',
-      silent: true
-    })
+    /**
+     * Renders process.env.VARIABLE to strings in build
+     */
+    new Dotenv()
   ],
   module: {
     rules: [
       {
-        test: /\.js$/,
-        use: 'imports-loader?this=>window'
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ['@babel/plugin-transform-runtime']
+          }
+        }
       }
     ]
   }
