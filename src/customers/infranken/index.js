@@ -32,15 +32,15 @@ async function init (global) {
   const logger = createPrettyLogger(global)
 
   /**
+   *  Init global behave object if it doesn't exist yet
+   */
+  const behave = global[NAMESPACE] = global[NAMESPACE] || {}
+
+  /**
    * Get start time, try to retrieve from global object (if loder-snippet was
    * used)
    */
   const startTime = global[NAMESPACE].t || 1 * new Date()
-
-  /**
-   *  Init global behave object if it doesn't exist yet
-   */
-  const behave = global[NAMESPACE] = global[NAMESPACE] || {}
 
   /**
    * Load the tracker asynchronously as webpack-chunk
