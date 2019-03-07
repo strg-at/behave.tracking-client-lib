@@ -1,6 +1,6 @@
 
 /**
- * Bootstrapper
+ * @module InfrankenBootstrapper
  * Entry point for the browser build for InFranken.de
  */
 import { createPrettyLogger } from '../../logger/logger'
