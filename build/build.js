@@ -6,6 +6,10 @@ const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
 const CUSTOMER = process.env.CUSTOMER
+// FIXME
+const PUBLIC_PATH = CUSTOMER === 'infranken'
+  ? '//behave.infranken.de/static/'
+  : '/static/'
 
 CUSTOMER && console.log(`Building for CUSTOMER: ${CUSTOMER}`)
 
@@ -32,7 +36,7 @@ webpack({
     : './src/index.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
-    publicPath: '/static/',
+    publicPath: PUBLIC_PATH,
     filename: 'init.js',
     chunkFilename: '[name].[chunkhash].js',
   },
