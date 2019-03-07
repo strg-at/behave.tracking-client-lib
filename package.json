@@ -5,8 +5,9 @@
   "main": "src/track.js",
   "scripts": {
     "build": "node build/build.js",
-    "build:dev": "cross-env OUTPUT_PATH=\"../demo/\" WATCH=true npm run build",
-    "dev": "cross-env NODE_ENV=development npm run build:dev & node demo/server.js",
+    "build:dev": "cross-env NODE_ENV=development OUTPUT_PATH=\"../demo/dist/\" WATCH=true npm run build",
+    "build:infranken": "cross-env CUSTOMER=infranken OUTPUT_PATH=\"../dist/infranken/\" node build/build.js",
+    "dev": "npm run build:dev & node demo/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src"
   },
@@ -15,10 +16,12 @@
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.3.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/runtime": "^7.3.4",
     "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^2.0.0",
     "cross-env": "^5.2.0",
     "dotenv-webpack": "^1.7.0",
     "eslint": "^5.15.1",
