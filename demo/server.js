@@ -17,5 +17,6 @@ const app = express()
 const port = 8000
 
 app.use('/', express.static(path.join(__dirname, '.')))
+app.use('/infranken/*', express.static(path.join(__dirname, './demo.html')))
 
 app.listen(port, () => console.log(`\nDemo app listening on http://localhost:${port}/demo.html`))

@@ -11,7 +11,7 @@
     return elem;
   }
 
-  loadScript('track.js', function() {
+  loadScript('/dist/init.js', function() {
     loadScript('demo.js');
   });
 
