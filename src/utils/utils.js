@@ -61,3 +61,22 @@ export function throttle (func, wait, options) {
     return result
   }
 }
+
+/**
+ * @function loadScript
+ * @description Asynchronously loads an external javascript file by adding a script-tag to the DOM
+ * @param {Object} global Global scope, usually window, must provide `window.document`
+ * @param {String} src URL for script to be loaded
+ * @param {Function} cb Callback attached to `element.onload`
+ */
+export function loadScript (global, src, cb) {
+  let elem = global.document.createElement('script')
+  let node = global.document.getElementsByTagName('script')[0]
+  elem.async = 1
+  elem.src = src
+  if (cb) {
+    elem.onload = cb
+  }
+  node.parentNode.insertBefore(elem, node)
+  return elem
+}
