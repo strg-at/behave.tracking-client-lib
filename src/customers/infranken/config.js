@@ -8,7 +8,7 @@ export default {
     'strg',
     'strg_sticky'
   ],
-  RECOMMENDATION_APP_URL: '//behave.infranken.de/app.x.x.x.js',
+  RECOMMENDATION_APP_URL: '//behave.infranken.de/static/app.3.0.0.js',
   TRACKING_SERVICE_URL: process.env.NODE_ENV === 'development'
     ? 'ws://localhost:8008'
     : 'wss://behave.infranken.de/tracking-service'
