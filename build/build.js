@@ -9,9 +9,13 @@ const CUSTOMER = process.env.CUSTOMER
 
 CUSTOMER && console.log(`Building for CUSTOMER: ${CUSTOMER}`)
 
-const OUTPUT_PATH = process.env.OUTPUT_PATH
-  ? process.env.OUTPUT_PATH
+let OUTPUT_PATH = process.env.NODE_ENV === 'development'
+  ? '../demo/static/'
   : '../dist/'
+if (process.env.NODE_ENV === 'production' && CUSTOMER) {
+  OUTPUT_PATH = `${OUTPUT_PATH}${CUSTOMER}/`
+}
+
 const watch = !!process.env.WATCH
 
 webpack({
@@ -28,9 +32,7 @@ webpack({
     : './src/index.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
-    publicPath: process.env.NODE_ENV === 'development'
-      ? '/dist/'
-      : '/',
+    publicPath: '/static/',
     filename: 'init.js',
     chunkFilename: '[name].[chunkhash].js',
   },

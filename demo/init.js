@@ -11,7 +11,7 @@
     return elem;
   }
 
-  loadScript('/dist/init.js', function() {
+  loadScript('/static/init.js', function() {
     loadScript('demo.js');
   });
 
