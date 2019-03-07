@@ -4,17 +4,17 @@ import { createNoOpLogger } from '../logger/logger'
 /**
  * @function createTracker
  * @param {*} global
- * @param {*} deps
+ * @param {*} config
  * TODO:
  * - Move transport/ws to own module
  * - Move storages/persistance to own module
  * - Get rid of final global dependencies
  */
-export function createTracker (global, deps) {
+export function createTracker (global, config) {
   const {
     startTime,
     logger = createNoOpLogger()
-  } = deps
+  } = config
 
   const RECONNECT_TIMEOUT = process.env.RECONNECT_TIMEOUT || 2000
 
