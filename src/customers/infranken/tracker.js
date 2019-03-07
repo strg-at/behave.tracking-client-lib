@@ -34,7 +34,6 @@ export function configureTracker (global, config) {
 
   // tracker.init('//behave.infranken.de/tracking-service')
   tracker.init(endpoint)
-  console.log(tracker.visibilityTracker)
   tracker.visibilityTracker.init()
 
   /* ClientState */

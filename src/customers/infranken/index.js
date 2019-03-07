@@ -4,7 +4,7 @@
  * Entry point for the browser build for InFranken.de
  */
 import { createPrettyLogger } from '../../logger/logger'
-import { loadRecommandationsApp } from './app'
+// import { loadRecommandationsApp } from './app'
 import config from './config.js'
 
 /**
@@ -13,8 +13,8 @@ import config from './config.js'
 const {
   NAMESPACE,
   COOKIE_NAME,
-  APP_NODE_IDS,
-  RECOMMENDATION_APP_URL,
+  // APP_NODE_IDS,
+  // RECOMMENDATION_APP_URL,
   TRACKING_SERVICE_URL
 } = config
 
@@ -62,10 +62,10 @@ async function init (global) {
   /**
    * Load the recommendations app
    */
-  loadRecommandationsApp(global, {
-    APP_NODE_IDS,
-    RECOMMENDATION_APP_URL,
-  })
+  // loadRecommandationsApp(global, {
+  //   APP_NODE_IDS,
+  //   RECOMMENDATION_APP_URL,
+  // })
 }
 
 init(global)
