@@ -55,10 +55,10 @@ export function configureTracker (global, config) {
     tracker.windowStateChange('url.hash', global.location.hash)
   })
 
-  let articleId = parseArticleId(location.href)
-  articleId && tracker.windowStateChange('content.id', articleId)
+  // let articleId = parseArticleId(location.href)
+  // articleId && tracker.windowStateChange('content.id', articleId)
 
-  let articleSelector = 'article[id="article-' + articleId + '"]'
+  let articleSelector = '.article-container'
   if (document.querySelector(articleSelector)) {
     tracker.breakpointMeter.percent(articleSelector, 'content')
   }
