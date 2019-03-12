@@ -1,5 +1,5 @@
 /**
- * Infranken Configuration
+ * Noen Configuration
  */
 export default {
   NAMESPACE: 'strgBeHave',

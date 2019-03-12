@@ -1,7 +1,7 @@
 
 /**
- * @module InfrankenBootstrapper
- * Entry point for the browser build for InFranken.de
+ * @module NoenBootstrapper
+ * Entry point for the browser build for noen.at
  */
 import { createPrettyLogger } from '../../logger/logger'
 // import { loadRecommandationsApp } from './app'

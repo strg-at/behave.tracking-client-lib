@@ -6,6 +6,11 @@ Simple event tracking in the browser for the `tracking-api` Service via WebSocke
 
 Currently there are no external dependencies.
 
+## ENV Variables
+
+Currently a variable NAMESPACE is necessary with the same value as in the customer config.js.
+Example .env File: "NAMESPACE=strgBeHave"
+
 ## Development and Build
 
 Modules are usually concatenated and minified by a simple build system using UglifyJS. So all code must be written in ES5 with browser-feature awareness.

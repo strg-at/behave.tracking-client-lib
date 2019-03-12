@@ -1,5 +1,5 @@
 /**
- * @module InfrankenRecommendationAppLoader
+ * @module NoenRecommendationAppLoader
  * Load and init the recommendation app as external script
  */
 

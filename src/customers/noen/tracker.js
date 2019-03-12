@@ -1,6 +1,6 @@
 /**
- * @module InfrankenTracker
- * Tracker DOM-implementation for InFranken.de
+ * @module NoenTracker
+ * Tracker DOM-implementation for noen.at
  */
 
 import { createTracker } from '../../tracker/tracker'
