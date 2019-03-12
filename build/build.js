@@ -7,9 +7,14 @@ const path = require('path')
 
 const CUSTOMER = process.env.CUSTOMER
 // FIXME
-const PUBLIC_PATH = CUSTOMER === 'infranken'
-  ? '//behave.infranken.de/static/'
-  : '/static/'
+let PUBLIC_PATH = '/static/'
+if (CUSTOMER === 'infranken') {
+  PUBLIC_PATH = '//behave.infranken.de/static/'
+} else if (CUSTOMER === 'noen') {
+  PUBLIC_PATH = '//behave.noen.at/static/'
+} else if (CUSTOMER === 'sn') {
+  PUBLIC_PATH = '//behave.sn.at/static/'
+}
 
 CUSTOMER && console.log(`Building for CUSTOMER: ${CUSTOMER}`)
 
