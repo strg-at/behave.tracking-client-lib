@@ -38,7 +38,7 @@ export function createTracker (global, config) {
    */
   function syncHashes () {
     clientHash = localStorage.getItem('strg.metrics.client')
-    if (!clientHash) {
+    if (!clientHash || !isUuid(clientHash)) {
       clientHash = uuid4()
       localStorage.setItem('strg.metrics.client', clientHash)
       localStorage.setItem('strg.metrics.client.state', '{}')
