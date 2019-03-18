@@ -10,7 +10,7 @@
     "build:noen": "cross-env NODE_ENV=production CUSTOMER=noen node build/build.js",
     "build:sn": "cross-env NODE_ENV=production CUSTOMER=sn node build/build.js",
     "dev": "npm run build:dev & node demo/server.js",
-    "dev:infranken": "cross-env CUSTOMER=infranken NODE_ENV=development node build/build.js & node demo/server.js",
+    "dev:infranken": "cross-env CUSTOMER=infranken NODE_ENV=development WATCH=true node build/build.js & node demo/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src"
   },
@@ -23,6 +23,7 @@
     "@babel/plugin-transform-runtime": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/runtime": "^7.3.4",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^2.0.0",
     "cross-env": "^5.2.0",
