@@ -1,6 +1,19 @@
 /**
  * Infranken Configuration
  */
+
+let RECOMMENDATION_APP_URL = '//behave.infranken.de/static/app.3.0.0.js'
+let TRACKING_SERVICE_URL = 'wss://behave.infranken.de/ws/event'
+
+if (process.env.NODE_ENV === 'development') {
+  RECOMMENDATION_APP_URL = process.env.DEV_RECOMMENDATION_APP_URL
+    ? process.env.DEV_RECOMMENDATION_APP_URL
+    : RECOMMENDATION_APP_URL
+  TRACKING_SERVICE_URL = process.env.DEV_WS_ENDPOINT
+    ? `${process.env.DEV_WS_ENDPOINT}:${process.env.DEV_WS_PORT}`
+    : 'ws://localhost:8008'
+}
+
 export default {
   NAMESPACE: 'strgBeHave',
   COOKIE_NAME: 'MetricsOptout',
@@ -8,8 +21,6 @@ export default {
     'strg',
     'strg_sticky'
   ],
-  RECOMMENDATION_APP_URL: '//behave.infranken.de/static/app.3.0.0.js',
-  TRACKING_SERVICE_URL: process.env.NODE_ENV === 'development'
-    ? 'ws://localhost:8008'
-    : 'wss://behave.infranken.de/ws/event'
+  RECOMMENDATION_APP_URL,
+  TRACKING_SERVICE_URL,
 }
