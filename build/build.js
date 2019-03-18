@@ -17,7 +17,7 @@ if (CUSTOMER === 'infranken') {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  PUBLIC_PATH = '//localhost:8000/static/'
+  PUBLIC_PATH = process.env.DEV_PUBLIC_PATH || '//localhost:8000/static/'
 }
 
 CUSTOMER && console.log(`Building for CUSTOMER: ${CUSTOMER}`)
