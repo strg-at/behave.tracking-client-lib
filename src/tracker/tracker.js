@@ -169,7 +169,10 @@ export function createTracker (global, config) {
     queue.push({
       time: new Date().getTime(),
       key: key,
-      value: value
+      value: value,
+      client: clientHash,
+      session: sessionHash,
+      window: windowHash,
     })
     flush() // Immediate flush with no timeout
   }
