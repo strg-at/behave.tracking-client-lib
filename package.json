@@ -5,8 +5,12 @@
   "main": "src/track.js",
   "scripts": {
     "build": "node build/build.js",
-    "build:demo": "cross-env OUTPUT_PATH=\"../demo/\" WATCH=true npm run build",
-    "demo": "npm run build:demo & node demo/server.js",
+    "build:dev": "cross-env NODE_ENV=development WATCH=true npm run build",
+    "build:infranken": "cross-env NODE_ENV=production CUSTOMER=infranken node build/build.js",
+    "build:noen": "cross-env NODE_ENV=production CUSTOMER=noen node build/build.js",
+    "build:sn": "cross-env NODE_ENV=production CUSTOMER=sn node build/build.js",
+    "dev": "npm run build:dev & node demo/server.js",
+    "dev:infranken": "cross-env CUSTOMER=infranken NODE_ENV=development node build/build.js & node demo/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src"
   },
@@ -14,14 +18,20 @@
   "license": "UNLICENSED",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/runtime": "^7.3.4",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^2.0.0",
     "cross-env": "^5.2.0",
-    "dotenv-webpack": "^1.5.7",
-    "eslint": "^5.0.1",
-    "eslint-plugin-node": "^8.0.0",
+    "dotenv-webpack": "^1.7.0",
+    "eslint": "^5.15.1",
+    "eslint-plugin-node": "^8.0.1",
     "express": "^4.16.4",
-    "imports-loader": "^0.8.0",
     "standard": "^12.0.1",
-    "webpack": "^4.25.1",
-    "ws": "^6.1.2"
+    "webpack": "^4.29.6",
+    "ws": "^6.2.0"
   }
 }
