@@ -94,16 +94,15 @@ export function createTracker (global, config) {
   }
 
   function createQueryParams () {
-    let delta = 1 * new Date() - startTime
     logger.log('Client:', clientHash)
     logger.log('Session:', sessionHash)
     logger.log('Window:', windowHash)
-    logger.log('Delta:', delta)
+    logger.log('Time:', startTime)
     return [
       '?client=', clientHash,
       '&session=', sessionHash,
       '&window=', windowHash,
-      '&delta=', delta,
+      '&time=', startTime,
     ].join('')
   }
 
@@ -161,17 +160,19 @@ export function createTracker (global, config) {
   })
 
   /**
-   * @description Adds events to the queue and sets the time delta for when the
-   * event was triggered.
+   * @description Adds events to the queue and sets the time as UTC timestamp.
    * @param {string} key - The event name, e.g. 'article.id'.
    * @param {string|number} value - The events value, e.g. 'Art-123456'
    */
   function enqueue (key, value) {
     logger.log('Enqueue', key, value)
     queue.push({
-      delta: 1 * new Date() - startTime,
+      time: new Date().getTime(),
       key: key,
-      value: value
+      value: value,
+      client: clientHash,
+      session: sessionHash,
+      window: windowHash,
     })
     flush() // Immediate flush with no timeout
   }
