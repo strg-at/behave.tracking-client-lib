@@ -16,6 +16,10 @@ if (CUSTOMER === 'infranken') {
   PUBLIC_PATH = '//behave.sn.at/static/'
 }
 
+if (process.env.NODE_ENV === 'development') {
+  PUBLIC_PATH = '//localhost:8000/static/'
+}
+
 CUSTOMER && console.log(`Building for CUSTOMER: ${CUSTOMER}`)
 
 let OUTPUT_PATH = process.env.NODE_ENV === 'development'
