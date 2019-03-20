@@ -2,7 +2,7 @@
  * Infranken Configuration
  */
 
-let RECOMMENDATION_APP_URL = '//behave.infranken.de/static/app.3.0.0.js'
+let RECOMMENDATION_APP_URL = '//behave.infranken.de/static/app.3.0.3.js'
 let TRACKING_SERVICE_URL = 'wss://behave.infranken.de/ws/event'
 
 if (process.env.NODE_ENV === 'development') {
