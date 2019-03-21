@@ -29,7 +29,7 @@ async function init (global) {
   /**
    * Enable logging-support for the build
    */
-  const logger = createPrettyLogger(global)
+  const logger = createPrettyLogger(global, { NAMESPACE })
 
   /**
    *  Init global behave object if it doesn't exist yet
@@ -47,6 +47,7 @@ async function init (global) {
    */
   const { configureTracker } = await import(/* webpackChunkName: "tracker" */ './tracker')
   const tracker = configureTracker(global, {
+    NAMESPACE,
     logger,
     startTime,
     endpoint: TRACKING_SERVICE_URL

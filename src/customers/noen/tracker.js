@@ -15,19 +15,12 @@ export function parseArticleId (url) {
 }
 
 export function configureTracker (global, config) {
-  const {
-    logger,
-    startTime,
-    endpoint
-  } = config
+  const { endpoint } = config
 
   /**
    * Create the tracker
   */
-  const tracker = createTracker(global, {
-    startTime,
-    logger,
-  })
+  const tracker = createTracker(global, config)
 
   tracker.use('breakpointMeter', createBreakPointMeter(global, { tracker }))
   tracker.use('visibilityTracker', createVisibilityTracking(global, { tracker }))
