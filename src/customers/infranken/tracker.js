@@ -4,7 +4,8 @@
  */
 
 import { createTracker } from '../../tracker/tracker'
-import { createBreakPointMeter } from '../../plugins/plugin.breakpoint'
+// import { createBreakPointMeter } from '../../plugins/plugin.breakpoint'
+import { createScrollDepthMeter } from '../../plugins/plugin.scroll-depth'
 import { createVisibilityTracking } from '../../plugins/plugin.visibility'
 
 export function parseArticleId (url) {
@@ -22,10 +23,9 @@ export function configureTracker (global, config) {
   */
   const tracker = createTracker(global, config)
 
-  tracker.use('breakpointMeter', createBreakPointMeter(global, { tracker }))
+  tracker.use('scrollDepthMeter', createScrollDepthMeter(global, { tracker }))
   tracker.use('visibilityTracker', createVisibilityTracking(global, { tracker }))
 
-  // tracker.init('//behave.infranken.de/tracking-service')
   tracker.init(endpoint)
   tracker.visibilityTracker.init()
 
@@ -53,7 +53,10 @@ export function configureTracker (global, config) {
 
   let articleSelector = 'article[id="article-' + articleId + '"]'
   if (document.querySelector(articleSelector)) {
-    tracker.breakpointMeter.percent(articleSelector, 'content')
+    tracker.scrollDepthMeter.percent({
+      selector: articleSelector,
+      eventKey: 'breakpoint.content.percent.max',
+    })
   }
 
   return tracker
