@@ -1,5 +1,5 @@
 /**
- * @module strg/metrics/visibility
+ * @module strgBeHave/tracker/visibility
  */
 export function createVisibilityTracking (global, { tracker }) {
   let hidden

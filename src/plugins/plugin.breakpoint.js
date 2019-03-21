@@ -1,5 +1,5 @@
 /**
- * @module strg/metrics/breakpoint
+ * @module strgBeHave/tracker/breakpoint
  */
 
 import { throttle } from '../utils/utils'
