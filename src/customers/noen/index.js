@@ -13,7 +13,7 @@ import config from './config.js'
 const {
   NAMESPACE,
   COOKIE_NAME,
-  APP_NODE_IDS,
+  // APP_NODE_IDS,
   // RECOMMENDATION_APP_URL,
   TRACKING_SERVICE_URL
 } = config
