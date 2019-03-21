@@ -16,6 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 
 export default {
   NAMESPACE: 'strgBeHave',
+  CLIENT_STORAGE_NAMESPACE: 'strg.metrics',
   COOKIE_NAME: 'MetricsOptout',
   APP_NODE_IDS: [
     'strg',

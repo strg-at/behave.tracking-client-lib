@@ -12,6 +12,7 @@ import config from './config.js'
  */
 const {
   NAMESPACE,
+  CLIENT_STORAGE_NAMESPACE,
   COOKIE_NAME,
   APP_NODE_IDS,
   RECOMMENDATION_APP_URL,
@@ -29,7 +30,7 @@ async function init (global) {
   /**
    * Enable logging-support for the build
    */
-  const logger = createPrettyLogger(global, { NAMESPACE })
+  const logger = createPrettyLogger(global, config)
 
   /**
    *  Init global behave object if it doesn't exist yet
@@ -48,10 +49,15 @@ async function init (global) {
   const { configureTracker } = await import(/* webpackChunkName: "tracker" */ './tracker')
   const tracker = configureTracker(global, {
     NAMESPACE,
-    logger,
+    CLIENT_STORAGE_NAMESPACE,
     startTime,
-    endpoint: TRACKING_SERVICE_URL
+    endpoint: TRACKING_SERVICE_URL,
+    logger,
   })
+
+  /**
+   * Merge tracker to global namespace
+   */
   global[NAMESPACE] = {
     ...behave,
     tracker,
