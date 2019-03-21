@@ -25,7 +25,6 @@ export function configureTracker (global, config) {
   tracker.use('breakpointMeter', createBreakPointMeter(global, { tracker }))
   tracker.use('visibilityTracker', createVisibilityTracking(global, { tracker }))
 
-  // tracker.init('//behave.infranken.de/tracking-service')
   tracker.init(endpoint)
   tracker.visibilityTracker.init()
 
