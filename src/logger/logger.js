@@ -3,8 +3,8 @@
  * So setting e.g. ```window.strg.loggerHandler = console``` will log to browser
  * console in runtime.
  */
-export function createPrettyLogger (global) {
-  const GLOBAL_NAME = process.env.NAMESPACE
+export function createPrettyLogger (global, config) {
+  const { NAMESPACE } = config
   const logger = {
     _msg: function (args) {
       let css = [
@@ -15,26 +15,26 @@ export function createPrettyLogger (global) {
     },
     log: function () {
       let args = Array.prototype.slice.call(arguments)
-      global[GLOBAL_NAME].loggerHandler &&
-        global[GLOBAL_NAME].loggerHandler.log
+      global[NAMESPACE].loggerHandler &&
+        global[NAMESPACE].loggerHandler.log
           .apply(null, this._msg(args))
     },
     info: function () {
       let args = Array.prototype.slice.call(arguments)
-      global[GLOBAL_NAME].loggerHandler &&
-        global[GLOBAL_NAME].loggerHandler.info
+      global[NAMESPACE].loggerHandler &&
+        global[NAMESPACE].loggerHandler.info
           .apply(null, this._msg(args))
     },
     warn: function () {
       let args = Array.prototype.slice.call(arguments)
-      global[GLOBAL_NAME].loggerHandler &&
-        global[GLOBAL_NAME].loggerHandler.warn
+      global[NAMESPACE].loggerHandler &&
+        global[NAMESPACE].loggerHandler.warn
           .apply(null, this._msg(args))
     },
     error: function () {
       let args = Array.prototype.slice.call(arguments)
-      global[GLOBAL_NAME].loggerHandler &&
-        global[GLOBAL_NAME].loggerHandler.error
+      global[NAMESPACE].loggerHandler &&
+        global[NAMESPACE].loggerHandler.error
           .apply(null, this._msg(args))
     },
   }

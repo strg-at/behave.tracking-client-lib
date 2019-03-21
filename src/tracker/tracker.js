@@ -12,11 +12,11 @@ import { createNoOpLogger } from '../logger/logger'
  */
 export function createTracker (global, config) {
   const {
+    NAMESPACE,
+    RECONNECT_TIMEOUT = 2000,
     startTime,
     logger = createNoOpLogger()
   } = config
-
-  const RECONNECT_TIMEOUT = process.env.RECONNECT_TIMEOUT || 2000
 
   /**
    * Init top scope variables
@@ -52,7 +52,7 @@ export function createTracker (global, config) {
       sessionStorage.setItem('strg.metrics.session', sessionHash)
     }
     // FIXME: Should not implement global
-    windowHash = global[process.env.NAMESPACE].window = global[process.env.NAMESPACE].window || uuid4()
+    windowHash = global[NAMESPACE].window = global[NAMESPACE].window || uuid4()
   }
 
   /**

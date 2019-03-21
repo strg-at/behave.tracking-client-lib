@@ -1,5 +1,6 @@
 /**
- * Entry point for the browser build
+ * Entry point for the standard-browser build
+ * Uses process.env for configuration of the module
  */
 
 import { createTracker } from './tracker/tracker'
@@ -7,6 +8,7 @@ import { createPrettyLogger } from './logger/logger'
 import { createBreakPointMeter } from './plugins/plugin.breakpoint'
 import { createVisibilityTracking } from './plugins/plugin.visibility'
 
+// FIXME: Move to own standard-config
 const NAMESPACE = process.env.NAMESPACE
 
 /**
