@@ -19,6 +19,13 @@ export function createTracker (global, config) {
   } = config
 
   /**
+   * Default client storage namespace to global namespace,
+   */
+  const {
+    CLIENT_STORAGE_NAMESPACE = NAMESPACE
+  } = config
+
+  /**
    * Init top scope variables
    */
   let connection = null
@@ -37,19 +44,19 @@ export function createTracker (global, config) {
    *   - `windowHash` is bound to the current JS scope `window`.
    */
   function syncHashes () {
-    clientHash = localStorage.getItem('strg.metrics.client')
+    clientHash = localStorage.getItem(`${CLIENT_STORAGE_NAMESPACE}.client`)
     if (!clientHash || !isUuid(clientHash)) {
       clientHash = uuid4()
-      localStorage.setItem('strg.metrics.client', clientHash)
-      localStorage.setItem('strg.metrics.client.state', '{}')
-    } else if (!localStorage.getItem('strg.metrics.client.state')) {
-      localStorage.setItem('strg.metrics.client.state', '{}')
+      localStorage.setItem(`${CLIENT_STORAGE_NAMESPACE}.client`, clientHash)
+      localStorage.setItem(`${CLIENT_STORAGE_NAMESPACE}.client.state`, '{}')
+    } else if (!localStorage.getItem(`${CLIENT_STORAGE_NAMESPACE}.client.state`)) {
+      localStorage.setItem(`${CLIENT_STORAGE_NAMESPACE}.client.state`, '{}')
     }
 
-    sessionHash = sessionStorage.getItem('strg.metrics.session')
+    sessionHash = sessionStorage.getItem(`${CLIENT_STORAGE_NAMESPACE}.session`)
     if (!sessionHash || !isUuid(sessionHash)) {
       sessionHash = uuid4()
-      sessionStorage.setItem('strg.metrics.session', sessionHash)
+      sessionStorage.setItem(`${CLIENT_STORAGE_NAMESPACE}.session`, sessionHash)
     }
     // FIXME: Should not implement global
     windowHash = global[NAMESPACE].window = global[NAMESPACE].window || uuid4()
@@ -73,7 +80,7 @@ export function createTracker (global, config) {
         throw Error('Value Error: "' + newHash + '" is not a valid UUID')
       }
       clientHash = newHash
-      localStorage.setItem('strg.metrics.client', newHash)
+      localStorage.setItem(`${CLIENT_STORAGE_NAMESPACE}.client`, newHash)
     }
   }
 
@@ -179,18 +186,18 @@ export function createTracker (global, config) {
 
   /**
    * @class
-   * @name metrics
+   * @name Tracker
    */
   let tracker = {
     /**
      * @function init
-     * @memberof strg.metrics#
-     * @summary Initialize metrics.
+     * @memberof strgBeHave#
+     * @summary Initialize tracking
      * @param {string} url - *endpoint URL* for the websocket server.
      * @description This is the first thing, that needs to be called when using
-     * metrics. It should also be called at most once!
+     * tracking. It should also be called at most once.
      *
-     * The *url* to the websocket server may start with aprotocol description
+     * The *url* to the websocket server may start with a protocol description
      * ("wss://..."). If it does not, the protocol will be prepended
      * automatically, depending on the current connection security. If we are on
      * an "https" domain, the protocol will be "wss://", otherwise it will be
@@ -211,7 +218,7 @@ export function createTracker (global, config) {
 
     /**
      * @function trigger
-     * @memberof strg.metrics#
+     * @memberof strgBeHave#
      * @description Unconditionally triggers an event with given key and value.
      * @param {string} key - The event name, e.g. 'article.id'.
      * @param {string|number} value - The events value, e.g. 'Art-123456'
@@ -222,8 +229,8 @@ export function createTracker (global, config) {
 
     /**
      * @function clientStateChange
-     * @memberof strg.metrics#
-     * @summary Notifies metrics of a state change within the client.
+     * @memberof strgBeHave#
+     * @summary Notifies tracking of a state change within the client.
      * @param {string} key - The event name.
      * @param {string|number} value - The event value.
      * @description This function is similar to :js:func:`trigger`, but will only
@@ -231,19 +238,19 @@ export function createTracker (global, config) {
      * last call.
      */
     clientStateChange (key, value) {
-      clientState = JSON.parse(localStorage.getItem('strg.metrics.client.state'))
+      clientState = JSON.parse(localStorage.getItem(`${CLIENT_STORAGE_NAMESPACE}.client.state`))
       if (clientState[key] === value) {
         return
       }
       clientState[key] = value
-      localStorage.setItem('strg.metrics.client.state', JSON.stringify(clientState))
+      localStorage.setItem(`${CLIENT_STORAGE_NAMESPACE}.client.state`, JSON.stringify(clientState))
       enqueue(key, value)
     },
 
     /**
      * @function windowStateChange
-     * @memberof strg.metrics#
-     * @summary Notifies metrics of a state change within the window.
+     * @memberof strgBeHave#
+     * @summary Notifies tracking of a state change within the window.
      * @param {string} key - The event name.
      * @param {string|number} value - The event value.
      * @description This function is similar to :js:func:`clientStateChange`,
@@ -260,7 +267,7 @@ export function createTracker (global, config) {
 
     /**
      * @function windowStateInit
-     * @memberof strg.metrics#
+     * @memberof strgBeHave#
      * @summary Sets the initial window state without triggering an event.
      * @param {string} key - The event name.
      * @param {string|number} value - The event value.
