@@ -6,7 +6,7 @@ const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
 const CUSTOMER = process.env.CUSTOMER
-// FIXME
+// FIXME: Move to config!!!
 let PUBLIC_PATH = '/static/'
 if (CUSTOMER === 'infranken') {
   PUBLIC_PATH = '//behave.infranken.de/static/'
