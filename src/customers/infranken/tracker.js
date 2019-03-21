@@ -5,7 +5,7 @@
 
 import { createTracker } from '../../tracker/tracker'
 // import { createBreakPointMeter } from '../../plugins/plugin.breakpoint'
-import { createScrollDepthMeter } from '../../plugins/plugin.scroll-depth'
+import { createScrollTracking } from '../../plugins/plugin.scroll'
 import { createVisibilityTracking } from '../../plugins/plugin.visibility'
 
 export function parseArticleId (url) {
@@ -23,7 +23,7 @@ export function configureTracker (global, config) {
   */
   const tracker = createTracker(global, config)
 
-  tracker.use('scrollDepthMeter', createScrollDepthMeter(global, { tracker }))
+  tracker.use('scrollTracking', createScrollTracking(global, { tracker }))
   tracker.use('visibilityTracker', createVisibilityTracking(global, { tracker }))
 
   tracker.init(endpoint)
@@ -53,11 +53,22 @@ export function configureTracker (global, config) {
 
   let articleSelector = 'article[id="article-' + articleId + '"]'
   if (document.querySelector(articleSelector)) {
-    tracker.scrollDepthMeter.percent({
+    tracker.scrollTracking.scrollDepth({
       selector: articleSelector,
       eventKey: 'breakpoint.content.percent.max',
     })
+    // tracker.scrollMeter.scrollDepth({
+    //   selector: articleSelector,
+    //   eventKey: 'breakpoint.content.percent.max',
+    // })
   }
+
+  // FIXME: TEST ONLY
+  // tracker.scrollTracking.visibility({
+  //   selector: '#strg',
+  //   eventValue: 666,
+  //   eventKey: 'strgboxobserver',
+  // })
 
   return tracker
 }

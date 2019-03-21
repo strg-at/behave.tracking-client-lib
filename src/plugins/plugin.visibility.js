@@ -1,5 +1,6 @@
 /**
  * @module strgBeHave/tracker/visibility
+ * @description Browser tab visibility
  */
 export function createVisibilityTracking (global, { tracker }) {
   let hidden
