@@ -4,7 +4,6 @@
  */
 
 import { createTracker } from '../../tracker/tracker'
-// import { createBreakPointMeter } from '../../plugins/plugin.breakpoint'
 import { createScrollTracking } from '../../plugins/plugin.scroll'
 import { createVisibilityTracking } from '../../plugins/plugin.visibility'
 
@@ -58,10 +57,6 @@ export function configureTracker (global, config) {
       {
         eventKey: 'breakpoint.content.percent.max',
       })
-    // tracker.scrollMeter.scrollDepth({
-    //   selector: articleSelector,
-    //   eventKey: 'breakpoint.content.percent.max',
-    // })
   }
 
   // FIXME: TEST ONLY
