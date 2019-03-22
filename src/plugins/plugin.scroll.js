@@ -173,7 +173,14 @@ export function createScrollTracking (global, { tracker }) {
   }
 
   return {
-    visibility ({ selector, eventKey, eventValue = 1, visibilityThreshold }) {
+    visibility (
+      selector,
+      {
+        eventKey,
+        eventValue = 1,
+        visibilityThreshold
+      }
+    ) {
       const DOMNode = typeof selector === 'string'
         ? document.querySelector(selector)
         : selector
@@ -190,7 +197,13 @@ export function createScrollTracking (global, { tracker }) {
         visibilityThreshold,
       })
     },
-    scrollDepth ({ selector, eventKey, gaugePointInterval = null }) {
+    scrollDepth (
+      selector,
+      {
+        eventKey,
+        gaugePointInterval = null
+      }
+    ) {
       const DOMNode = typeof selector === 'string'
         ? document.querySelector(selector)
         : selector

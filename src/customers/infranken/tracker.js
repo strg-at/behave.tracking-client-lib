@@ -64,11 +64,12 @@ export function configureTracker (global, config) {
   }
 
   // FIXME: TEST ONLY
-  // tracker.scrollTracking.visibility({
-  //   selector: '#strg',
-  //   eventValue: 666,
-  //   eventKey: 'strgboxobserver',
-  // })
+  // tracker.scrollTracking.visibility(
+  //   '#strg',
+  //   {
+  //     eventValue: 666,
+  //     eventKey: 'strgboxobserver',
+  //   })
 
   return tracker
 }
