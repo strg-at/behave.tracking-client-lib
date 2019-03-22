@@ -53,10 +53,11 @@ export function configureTracker (global, config) {
 
   let articleSelector = 'article[id="article-' + articleId + '"]'
   if (document.querySelector(articleSelector)) {
-    tracker.scrollTracking.scrollDepth({
-      selector: articleSelector,
-      eventKey: 'breakpoint.content.percent.max',
-    })
+    tracker.scrollTracking.scrollDepth(
+      articleSelector,
+      {
+        eventKey: 'breakpoint.content.percent.max',
+      })
     // tracker.scrollMeter.scrollDepth({
     //   selector: articleSelector,
     //   eventKey: 'breakpoint.content.percent.max',
