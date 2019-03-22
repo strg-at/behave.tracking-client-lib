@@ -7,22 +7,22 @@ import { throttle } from '../utils/utils'
 export function createScrollTracking (global, { tracker }) {
   const DEFAULTS = {
     THROTTLE_DELAY: 200,
-    GAUGE_POINT_INTVERVAL: 25
+    GAUGE_POINT_INTVERVAL: 25,
   }
 
   class VisibilityMeter {
     constructor (DOMNode, {
       eventKey,
       eventValue,
-      threshold,
+      visibilityThreshold = 65, // in percent %
     }) {
       this.eventKey = eventKey
       this.eventValue = eventValue
-      if (!threshold) {
-        threshold = []
-        for (let i = 0; i <= 1.0; i += 0.1) {
-          threshold.push(i)
-        }
+      this.visibilityThreshold = visibilityThreshold
+      // Threshold for the callback, measuring every 10%
+      const threshold = []
+      for (let i = 0; i <= 1.0; i += 0.1) {
+        threshold.push(i)
       }
       this.observer = new IntersectionObserver(
         (entries) => this.observerCallback(entries),
@@ -35,12 +35,50 @@ export function createScrollTracking (global, { tracker }) {
     }
 
     observerCallback (entries) {
-      // console.log('Observer', this.eventKey, entries.map(e => e))
       const perc = entries[0].intersectionRatio * 100
-      if (perc > 80) {
+      if (perc > this.visibilityThreshold) {
         tracker.windowStateChange(this.eventKey, this.eventValue)
         this.observer.disconnect()
       }
+    }
+  }
+
+  class VisibilityMeterFallback {
+    constructor (DOMNode, {
+      eventKey,
+      eventValue,
+      // visibilityThreshold,  // FIXME: Ignore for now
+    }) {
+      this.eventKey = eventKey
+      this.eventValue = eventValue
+      this.DOMNode = DOMNode
+
+      this.scrollHandler = throttle(this.trackVisibility.bind(this),
+        DEFAULTS.THROTTLE_DELAY)
+
+      global.addEventListener('scroll', this.scrollHandler)
+      global.addEventListener('resize', this.scrollHandler)
+
+      this.scrollHandler()
+    }
+
+    trackVisibility () {
+      const rect = this.DOMNode.getBoundingClientRect()
+      if (this.isRectVisible(rect)) {
+        tracker.windowStateChange(this.eventKey, this.eventValue)
+        global.removeEventListener('scroll', this.scrollHandler)
+        global.removeEventListener('resize', this.scrollHandler)
+      }
+    }
+
+    isRectVisible (rect) {
+      return (
+        this.DOMNode.offsetParent !== null &&
+        rect.bottom >= 0 &&
+        rect.right >= 0 &&
+        rect.top <= (global.innerHeight || document.documentElement.clientHeight) &&
+        rect.left <= (global.innerWidth || document.documentElement.clientWidth)
+      )
     }
   }
 
@@ -135,14 +173,21 @@ export function createScrollTracking (global, { tracker }) {
   }
 
   return {
-    visibility ({ selector, eventKey, eventValue = 1, threshold }) {
+    visibility ({ selector, eventKey, eventValue = 1, visibilityThreshold }) {
       const DOMNode = typeof selector === 'string'
         ? document.querySelector(selector)
         : selector
-      return new VisibilityMeter(DOMNode, {
+      if ('IntersectionObserver' in global) {
+        return new VisibilityMeter(DOMNode, {
+          eventKey,
+          eventValue,
+          visibilityThreshold,
+        })
+      }
+      return new VisibilityMeterFallback(DOMNode, {
         eventKey,
         eventValue,
-        threshold,
+        visibilityThreshold,
       })
     },
     scrollDepth ({ selector, eventKey, gaugePointInterval = null }) {
@@ -154,15 +199,5 @@ export function createScrollTracking (global, { tracker }) {
         gaugePointInterval,
       })
     },
-
-    // percent ({ selector, eventKey, gaugePointInterval = null }) {
-    //   const DOMNode = typeof selector === 'string'
-    //     ? document.querySelector(selector)
-    //     : selector
-    //   return new BreakpointMeter(DOMNode, {
-    //     id: eventKey,
-    //     gaugePointInterval,
-    //   })
-    // },
   }
 }
