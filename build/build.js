@@ -6,18 +6,16 @@ const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
 const CUSTOMER = process.env.CUSTOMER
-// FIXME: Move to config!!!
-let PUBLIC_PATH = '/static/'
-if (CUSTOMER === 'infranken') {
-  PUBLIC_PATH = '//behave.infranken.de/static/'
-} else if (CUSTOMER === 'noen') {
-  PUBLIC_PATH = '//behave.noen.at/static/'
-} else if (CUSTOMER === 'sn') {
-  PUBLIC_PATH = '//behave.sn.at/static/'
-}
 
+const conf = {
+  NAMESPACE: 'strgBeHave',
+}
+if (CUSTOMER) {
+  const customerConf = require(path.join(__dirname, `'/../../src/customers/${CUSTOMER}/config.js`))
+  Object.assign(conf, customerConf)
+}
 if (process.env.NODE_ENV === 'development') {
-  PUBLIC_PATH = process.env.DEV_PUBLIC_PATH || '//localhost:8000/static/'
+  conf.PUBLIC_PATH = process.env.DEV_PUBLIC_PATH || '//localhost:8000/static/'
 }
 
 CUSTOMER && console.log(`Building for CUSTOMER: ${CUSTOMER}`)
@@ -33,19 +31,18 @@ const watch = !!process.env.WATCH
 
 webpack({
   // Configuration Object
-  // mode: 'production',
   mode: process.env.NODE_ENV || 'production',
   devtool: process.env.NODE_ENV === 'development'
     ? 'inline-source-map'
     : false,
   watch,
-  // context: path.resolve(__dirname, '../src/'),
   entry: CUSTOMER
     ? `./src/customers/${CUSTOMER}/index.js`
     : './src/index.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
-    publicPath: PUBLIC_PATH,
+    publicPath: conf.PUBLIC_PATH,
+    jsonpFunction: `webpackJsonp${conf.NAMESPACE}`,
     filename: 'init.js',
     chunkFilename: '[name].[chunkhash].js',
   },
