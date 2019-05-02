@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
     : 'ws://localhost:8008'
 }
 
-export default {
+module.exports = {
   NAMESPACE: 'strgBeHave',
   CLIENT_STORAGE_NAMESPACE: 'strg.metrics',
   COOKIE_NAME: 'MetricsOptout',
@@ -22,6 +22,7 @@ export default {
     'strg',
     'strg_sticky'
   ],
+  PUBLIC_PATH: '//behave.infranken.de/static/',
   RECOMMENDATION_APP_URL,
   TRACKING_SERVICE_URL,
 }
