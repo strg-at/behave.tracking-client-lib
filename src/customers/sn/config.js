@@ -9,4 +9,5 @@ module.exports = {
   PUBLIC_PATH: '//behave.sn.at/static/',
   RECOMMENDATION_APP_URL: 'https://behave.sn.at/api/recommendation',
   TRACKING_SERVICE_URL: 'wss://behave.sn.at/ws/event',
+  ARTICLE_SELECTOR: 'article.article',
 }

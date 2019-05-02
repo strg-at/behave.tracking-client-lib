@@ -14,7 +14,8 @@ const {
   COOKIE_NAME,
   // APP_NODE_IDS,
   // RECOMMENDATION_APP_URL,
-  TRACKING_SERVICE_URL
+  TRACKING_SERVICE_URL,
+  ARTICLE_SELECTOR,
 } = config
 
 async function init (global) {
@@ -44,10 +45,11 @@ async function init (global) {
   /**
    * Load the tracker asynchronously as webpack-chunk
    */
-  const { configureTracker } = await import(/* webpackChunkName: "tracker" */ './tracker')
+  const { configureTracker } = await import(/* webpackChunkName: "tracker" */ '../../tracker/standard')
   const tracker = configureTracker(global, {
     NAMESPACE,
     startTime,
+    articleSelector: ARTICLE_SELECTOR,
     endpoint: TRACKING_SERVICE_URL,
     logger,
   })

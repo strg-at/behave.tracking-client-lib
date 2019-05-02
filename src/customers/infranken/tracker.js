@@ -28,15 +28,6 @@ export function configureTracker (global, config) {
   tracker.init(endpoint)
   tracker.visibilityTracker.init()
 
-  /* ClientState */
-  // tracker.clientStateChange('screen.resolution', screen.width + 'x' + screen.height)
-  // screen.orientation && screen.orientation.type &&
-  // tracker.clientStateChange('screen.orientation', screen.orientation.type)
-  // tracker.clientStateChange('navigator.user_agent', navigator.userAgent)
-  // tracker.clientStateChange('navigator.language', navigator.language)
-  // navigator.systemLanguage &&
-  // tracker.clientStateChange('navigator.system_language', navigator.systemLanguage)
-
   /* WindowState */
   tracker.windowStateChange('url', global.location.href)
   document.referrer &&
@@ -58,14 +49,6 @@ export function configureTracker (global, config) {
         eventKey: 'breakpoint.content.percent.max',
       })
   }
-
-  // FIXME: TEST ONLY
-  // tracker.scrollTracking.visibility(
-  //   '#strg',
-  //   {
-  //     eventValue: 666,
-  //     eventKey: 'strgboxobserver',
-  //   })
 
   return tracker
 }
