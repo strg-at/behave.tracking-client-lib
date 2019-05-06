@@ -1,14 +1,14 @@
 /**
- * @module NoenTracker
- * Tracker DOM-implementation for noen.at
+ * @module StandardTracker
+ * Standard Tracker DOM-implementation
  */
 
-import { createTracker } from '../../tracker/tracker'
-import { createScrollTracking } from '../../plugins/plugin.scroll'
-import { createVisibilityTracking } from '../../plugins/plugin.visibility'
+import { createTracker } from './tracker'
+import { createScrollTracking } from '../plugins/plugin.scroll'
+import { createVisibilityTracking } from '../plugins/plugin.visibility'
 
 export function configureTracker (global, config) {
-  const { endpoint } = config
+  const { endpoint, articleSelector } = config
 
   /**
    * Create the tracker
@@ -31,7 +31,6 @@ export function configureTracker (global, config) {
     tracker.windowStateChange('url.hash', global.location.hash)
   })
 
-  let articleSelector = '.article-container'
   if (document.querySelector(articleSelector)) {
     tracker.scrollTracking.scrollDepth(
       articleSelector,
