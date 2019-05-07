@@ -36,7 +36,6 @@ webpack({
     ? 'inline-source-map'
     : false,
   watch,
-  entry: './src/bootstrapper/bootstrapper.js',
   // Don't use the standard bootstrapper if the customer requires a custom implementation
   entry: process.env.NON_STANDARD
     ? `./src/customers/${CUSTOMER}/index.js`
