@@ -1,10 +1,18 @@
 /**
- * @module NoenBootstrapper
- * Entry point for the browser build for noen.at
+ * @module Bootstrapper
+ * Entry point for the browser build for sn.at
  */
-import { createPrettyLogger } from '../../logger/logger'
-// import { loadRecommandationsApp } from './app'
-import config from './config.js'
+import { createPrettyLogger } from '../logger/logger'
+
+/**
+ * Special syntax `<CUSTOMER>` is being handled by Webpack
+ * NormalModuleReplacementPlugin so webpack doesn't treat env-based imports as
+ * dynamic imports.
+ */
+import config from '../customers/<CUSTOMER>/config.js'
+
+// TODO: Make standard-implementation loader for the app
+// import { loadRecommandationsApp } from '../customers/<CUSTOMER>/app'
 
 /**
  * Configuration constants
@@ -45,7 +53,7 @@ async function init (global) {
   /**
    * Load the tracker asynchronously as webpack-chunk
    */
-  const { configureTracker } = await import(/* webpackChunkName: "tracker" */ '../../tracker/standard')
+  const { configureTracker } = await import(/* webpackChunkName: "tracker" */ '../tracker/standard')
   const tracker = configureTracker(global, {
     NAMESPACE,
     startTime,

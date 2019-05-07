@@ -36,9 +36,11 @@ webpack({
     ? 'inline-source-map'
     : false,
   watch,
-  entry: CUSTOMER
+  entry: './src/bootstrapper/bootstrapper.js',
+  // Don't use the standard bootstrapper if the customer requires a custom implementation
+  entry: process.env.NON_STANDARD
     ? `./src/customers/${CUSTOMER}/index.js`
-    : './src/index.js',
+    : './src/bootstrapper/bootstrapper.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
     publicPath: conf.PUBLIC_PATH,
@@ -50,6 +52,9 @@ webpack({
     /**
      * Renders process.env.VARIABLE to strings in build
      */
+    new webpack.NormalModuleReplacementPlugin(/(.*)<CUSTOMER>(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/<CUSTOMER>/, `${CUSTOMER}`)
+    }),
     new Dotenv(),
     new CleanWebpackPlugin(),
   ],
