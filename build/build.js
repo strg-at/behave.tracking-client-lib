@@ -5,7 +5,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
-const CUSTOMER = process.env.CUSTOMER
+/**
+ * Parse arguments
+ */
+let cmdValue
+const program = require('commander')
+program
+  .arguments('<cmd>')
+  .action(function (cmd) {
+    cmdValue = cmd
+  })
+  .parse(process.argv)
+
+const CUSTOMER = cmdValue || process.env.CUSTOMER
 
 const conf = {
   NAMESPACE: 'strgBeHave',
@@ -37,8 +49,8 @@ webpack({
     : false,
   watch,
   // Don't use the standard bootstrapper if the customer requires a custom implementation
-  entry: process.env.NON_STANDARD
-    ? `./src/customers/${CUSTOMER}/index.js`
+  entry: conf.ENTRY !== undefined
+    ? `./src/customers/${CUSTOMER}/${conf.ENTRY}`
     : './src/bootstrapper/bootstrapper.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),

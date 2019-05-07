@@ -25,4 +25,5 @@ module.exports = {
   PUBLIC_PATH: '//behave.infranken.de/static/',
   RECOMMENDATION_APP_URL,
   TRACKING_SERVICE_URL,
+  ENTRY: 'index.js',
 }

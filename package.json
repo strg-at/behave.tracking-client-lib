@@ -4,17 +4,15 @@
   "description": "strg.beHave - Tracking Client Modules",
   "main": "src/track.js",
   "scripts": {
-    "build:infranken": "npm run lint && cross-env NODE_ENV=production CUSTOMER=infranken NON_STANDARD=True node build/build.js",
-    "build:noen": "npm run lint && cross-env NODE_ENV=production CUSTOMER=noen node build/build.js",
-    "build:sn": "npm run lint && cross-env NODE_ENV=production CUSTOMER=sn node build/build.js",
-    "build:chip": "npm run lint && cross-env NODE_ENV=production CUSTOMER=chip node build/build.js",
-    "dev:infranken": "cross-env CUSTOMER=infranken NODE_ENV=development WATCH=true node build/build.js & node demo/server.js",
+    "start": "npm run lint && cross-env NODE_ENV=production node build/build.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src"
   },
   "author": "Ralf Traunsteiner <ralf@strg.at>",
   "license": "UNLICENSED",
-  "dependencies": {},
+  "dependencies": {
+    "commander": "^2.20.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
