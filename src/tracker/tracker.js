@@ -1,5 +1,6 @@
 import { uuid4, isUuid } from '../utils/utils'
 import { createNoOpLogger } from '../logger/logger'
+import { crc32 } from './crc'
 
 /**
  * @function createTracker
@@ -180,6 +181,7 @@ export function createTracker (global, config) {
       client: clientHash,
       session: sessionHash,
       window: windowHash,
+      crc: crc32(global.location.href.split('#')[0]),
     })
     flush() // Immediate flush with no timeout
   }
