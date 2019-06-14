@@ -5,6 +5,7 @@
   "main": "src/track.js",
   "scripts": {
     "start": "npm run lint && cross-env NODE_ENV=production node build/build.js",
+    "dev:infranken": "cross-env CUSTOMER=infranken NODE_ENV=development WATCH=true node build/build.js infranken & node demo/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src"
   },
