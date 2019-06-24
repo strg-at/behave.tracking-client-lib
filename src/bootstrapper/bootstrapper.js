@@ -11,8 +11,8 @@ import { createPrettyLogger } from '../logger/logger'
  */
 import config from '../customers/<CUSTOMER>/config.js'
 
-// TODO: Make standard-implementation loader for the app
-// import { loadRecommandationsApp } from '../customers/<CUSTOMER>/app'
+// Standard-implementation loader for the app
+import { loadRecommandationsApp } from '../customers/<CUSTOMER>/app'
 
 /**
  * Configuration constants
@@ -20,8 +20,8 @@ import config from '../customers/<CUSTOMER>/config.js'
 const {
   NAMESPACE,
   COOKIE_NAME,
-  // APP_NODE_IDS,
-  // RECOMMENDATION_APP_URL,
+  RECOMMENDATION_APP_CUSTOM_ELEMENTS,
+  RECOMMENDATION_APP_URL,
   TRACKING_SERVICE_URL,
   ARTICLE_SELECTOR,
 } = config
@@ -73,10 +73,10 @@ async function init (global) {
   /**
    * Load the recommendations app
    */
-  // loadRecommandationsApp(global, {
-  //   APP_NODE_IDS,
-  //   RECOMMENDATION_APP_URL,
-  // })
+  loadRecommandationsApp(global, {
+    RECOMMENDATION_APP_URL,
+    RECOMMENDATION_APP_CUSTOM_ELEMENTS,
+  })
 }
 
 init(global)
