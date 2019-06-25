@@ -101,6 +101,20 @@ export function createTracker (global, config) {
     }
   }
 
+  /**
+   * Parse clean url without hashes and query params from location object
+   * @param {Location} location - window.location object
+   */
+  function getCleanURI (location) {
+    return location.protocol +
+      '//' +
+      location.hostname +
+      (location.port ? ':' + location.port : '') + location.pathname
+  }
+
+  /**
+   * Create all search query params for inital get request on WS (deprecated?)
+   */
   function createQueryParams () {
     logger.log('Client:', clientHash)
     logger.log('Session:', sessionHash)
@@ -181,7 +195,7 @@ export function createTracker (global, config) {
       client: clientHash,
       session: sessionHash,
       window: windowHash,
-      crc: crc32(global.location.href.split('#')[0]),
+      crc: crc32(getCleanURI(global.location)),
     })
     flush() // Immediate flush with no timeout
   }
