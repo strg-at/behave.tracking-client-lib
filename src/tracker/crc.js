@@ -10,5 +10,8 @@ export function crc32 (str) {
   for (let i = 0, iTop = str.length; i < iTop; i++) {
     crc = (crc >>> 8) ^ b_table[(crc ^ str.charCodeAt(i)) & 0xFF]
   }
-  return ((crc ^ (-1)) >>> 0).toString(16)
+  crc = ((crc ^ (-1)) >>> 0).toString(16)
+  // FIX: Leftpad `0`s:
+  while (crc.length < 8) { crc = '0' + crc }
+  return crc
 }
