@@ -1,6 +1,7 @@
 import { uuid4, isUuid } from '../utils/utils'
 import { createNoOpLogger } from '../logger/logger'
 import { crc32 } from './crc'
+import { getCleanURI } from '../utils/utils'
 
 /**
  * @function createTracker
@@ -99,17 +100,6 @@ export function createTracker (global, config) {
       connection.send(msg)
       queue.shift()
     }
-  }
-
-  /**
-   * Parse clean url without hashes and query params from location object
-   * @param {Location} location - window.location object
-   */
-  function getCleanURI (location) {
-    return location.protocol +
-      '//' +
-      location.hostname +
-      (location.port ? ':' + location.port : '') + location.pathname
   }
 
   /**

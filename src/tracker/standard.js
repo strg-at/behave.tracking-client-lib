@@ -6,6 +6,7 @@
 import { createTracker } from './tracker'
 import { createScrollTracking } from '../plugins/plugin.scroll'
 import { createVisibilityTracking } from '../plugins/plugin.visibility'
+import { getCleanURI } from '../utils/utils'
 
 export function configureTracker (global, config) {
   const { endpoint, articleSelector } = config
@@ -22,7 +23,7 @@ export function configureTracker (global, config) {
   tracker.visibilityTracker.init()
 
   /* WindowState */
-  tracker.windowStateChange('url', global.location.href)
+  tracker.windowStateChange('url', getCleanURI(global.location))
   document.referrer &&
   tracker.windowStateChange('referrer', document.referrer)
   global.location.hash &&
