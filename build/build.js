@@ -25,6 +25,8 @@ const conf = {
 if (CUSTOMER) {
   const customerConf = require(path.join(__dirname, `'/../../src/customers/${CUSTOMER}/config.js`))
   Object.assign(conf, customerConf)
+} else {
+  throw new Error('Customer must be specified e.g. \n\n$ npm start noen\n\n')
 }
 if (process.env.NODE_ENV === 'development') {
   conf.PUBLIC_PATH = process.env.DEV_PUBLIC_PATH || '//localhost:8000/static/'
