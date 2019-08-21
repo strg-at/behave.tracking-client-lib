@@ -5,12 +5,9 @@
 
 import { createTracker } from '../../tracker/tracker'
 import { createScrollTracking } from '../../plugins/plugin.scroll'
-// FIXME: Do we still want to track tab visibility?
-// import { createVisibilityTracking } from '../plugins/plugin.visibility'
-import { getCleanURI } from '../../utils/utils'
 
 export function configureTracker (global, config) {
-  const { endpoint } = config
+  const { endpoint, getCleanURI } = config
 
   /**
    * Create the tracker
@@ -30,7 +27,6 @@ export function configureTracker (global, config) {
    * Init connection to endpoint and track tab visibility
    */
   tracker.init(endpoint)
-  // tracker.visibilityTracker.init()
 
   return tracker
 }
