@@ -3,7 +3,7 @@
  * Entry point for the browser build for sn.at
  */
 import { createPrettyLogger } from '../logger/logger'
-import { getCleanUri } from '../utils/utils'
+import { getCleanURI } from '../utils/utils'
 
 /**
  * Special syntax `<CUSTOMER>` is being handled by Webpack
@@ -62,7 +62,7 @@ async function init (global) {
     articleSelector: ARTICLE_SELECTOR,
     endpoint: TRACKING_SERVICE_URL,
     logger,
-    getCleanUri: GET_CLEAN_URI || getCleanUri
+    getCleanURI: GET_CLEAN_URI || getCleanURI
   })
 
   /**

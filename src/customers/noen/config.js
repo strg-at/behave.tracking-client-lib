@@ -1,4 +1,4 @@
-import { getCleanUri } from './get-clean-uri'
+const { getCleanURI } = require('./get-clean-uri')
 
 /**
  * Noen Configuration
@@ -16,5 +16,5 @@ module.exports = {
   ],
   TRACKING_SERVICE_URL: 'wss://behave.noen.at/ws/event',
   ARTICLE_SELECTOR: 'article.article-body',
-  GET_CLEAN_URI: getCleanUri,
+  GET_CLEAN_URI: getCleanURI,
 }
