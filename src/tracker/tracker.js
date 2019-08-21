@@ -1,4 +1,4 @@
-import { uuid4, isUuid, getCleanURI } from '../utils/utils'
+import { uuid4, isUuid } from '../utils/utils'
 import { createNoOpLogger } from '../logger/logger'
 import { crc32 } from './crc'
 
@@ -16,7 +16,8 @@ export function createTracker (global, config) {
     NAMESPACE,
     RECONNECT_TIMEOUT = 2000,
     startTime,
-    logger = createNoOpLogger()
+    logger = createNoOpLogger(),
+    getCleanURI,
   } = config
 
   /**

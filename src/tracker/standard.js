@@ -6,10 +6,9 @@
 import { createTracker } from './tracker'
 import { createScrollTracking } from '../plugins/plugin.scroll'
 import { createVisibilityTracking } from '../plugins/plugin.visibility'
-import { getCleanURI } from '../utils/utils'
 
 export function configureTracker (global, config) {
-  const { endpoint, articleSelector } = config
+  const { endpoint, articleSelector, getCleanURI } = config
 
   /**
    * Create the tracker
