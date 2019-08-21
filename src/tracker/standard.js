@@ -32,9 +32,13 @@ export function configureTracker (global, config) {
     tracker.windowStateChange('url.hash', global.location.hash)
   })
 
-  if (document.querySelector(articleSelector)) {
+  const articleElement = [].concat(articleSelector) // Cast to array and pick first found
+    .map(selector => document.querySelector(selector))
+    .filter(el => !!el)
+    .shift()
+  if (articleElement) {
     tracker.scrollTracking.scrollDepth(
-      articleSelector,
+      articleElement,
       {
         eventKey: 'breakpoint.content.percent.max',
       })
