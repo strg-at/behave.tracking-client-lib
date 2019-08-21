@@ -10,5 +10,5 @@ module.exports = {
     'behave-recommendation-box',
   ],
   TRACKING_SERVICE_URL: 'wss://behave.noen.at/ws/event',
-  ARTICLE_SELECTOR: '.article-container',
+  ARTICLE_SELECTOR: 'article.article-body',
 }
