@@ -15,11 +15,11 @@ export function loadRecommandationsApp (global, config) {
    * Test if custom elements were not previously created and still have
    * HTMLElement as constructor
    */
-  const doCreateElement = RECOMMENDATION_APP_CUSTOM_ELEMENTS.filter(element => {
+  const doLoadApp = RECOMMENDATION_APP_CUSTOM_ELEMENTS.filter(element => {
     return document.createElement(element).constructor === HTMLElement
   }).length > 0
 
-  if (doCreateElement) {
+  if (doLoadApp) {
     loadScript(global, RECOMMENDATION_APP_URL)
   }
 }
