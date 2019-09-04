@@ -5,7 +5,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 const path = require('path')
 
-const CUSTOMER = process.env.CUSTOMER
+/**
+ * Parse arguments
+ */
+let cmdValue
+const program = require('commander')
+program
+  .arguments('<cmd>')
+  .action(function (cmd) {
+    cmdValue = cmd
+  })
+  .parse(process.argv)
+
+const CUSTOMER = cmdValue || process.env.CUSTOMER
 
 const conf = {
   NAMESPACE: 'strgBeHave',
@@ -13,6 +25,8 @@ const conf = {
 if (CUSTOMER) {
   const customerConf = require(path.join(__dirname, `'/../../src/customers/${CUSTOMER}/config.js`))
   Object.assign(conf, customerConf)
+} else {
+  throw new Error('Customer must be specified e.g. \n\n$ npm start noen\n\n')
 }
 if (process.env.NODE_ENV === 'development') {
   conf.PUBLIC_PATH = process.env.DEV_PUBLIC_PATH || '//localhost:8000/static/'
@@ -36,9 +50,10 @@ webpack({
     ? 'inline-source-map'
     : false,
   watch,
-  entry: CUSTOMER
-    ? `./src/customers/${CUSTOMER}/index.js`
-    : './src/index.js',
+  // Don't use the standard bootstrapper if the customer requires a custom implementation
+  entry: conf.ENTRY !== undefined
+    ? `./src/customers/${CUSTOMER}/${conf.ENTRY}`
+    : './src/bootstrapper/bootstrapper.js',
   output: {
     path: path.resolve(__dirname, OUTPUT_PATH),
     publicPath: conf.PUBLIC_PATH,
@@ -50,6 +65,9 @@ webpack({
     /**
      * Renders process.env.VARIABLE to strings in build
      */
+    new webpack.NormalModuleReplacementPlugin(/(.*)<CUSTOMER>(\.*)/, function (resource) {
+      resource.request = resource.request.replace(/<CUSTOMER>/, `${CUSTOMER}`)
+    }),
     new Dotenv(),
     new CleanWebpackPlugin(),
   ],

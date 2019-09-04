@@ -8,7 +8,7 @@ import { createScrollTracking } from '../plugins/plugin.scroll'
 import { createVisibilityTracking } from '../plugins/plugin.visibility'
 
 export function configureTracker (global, config) {
-  const { endpoint, articleSelector } = config
+  const { endpoint, articleSelector, getCleanURI } = config
 
   /**
    * Create the tracker
@@ -22,7 +22,7 @@ export function configureTracker (global, config) {
   tracker.visibilityTracker.init()
 
   /* WindowState */
-  tracker.windowStateChange('url', global.location.href)
+  tracker.windowStateChange('url', getCleanURI(global.location))
   document.referrer &&
   tracker.windowStateChange('referrer', document.referrer)
   global.location.hash &&
@@ -31,9 +31,13 @@ export function configureTracker (global, config) {
     tracker.windowStateChange('url.hash', global.location.hash)
   })
 
-  if (document.querySelector(articleSelector)) {
+  const articleElement = [].concat(articleSelector) // Cast to array and pick first found
+    .map(selector => document.querySelector(selector))
+    .filter(el => !!el)
+    .shift()
+  if (articleElement) {
     tracker.scrollTracking.scrollDepth(
-      articleSelector,
+      articleElement,
       {
         eventKey: 'breakpoint.content.percent.max',
       })

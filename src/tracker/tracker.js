@@ -1,5 +1,6 @@
 import { uuid4, isUuid } from '../utils/utils'
 import { createNoOpLogger } from '../logger/logger'
+import { crc32 } from './crc'
 
 /**
  * @function createTracker
@@ -15,7 +16,8 @@ export function createTracker (global, config) {
     NAMESPACE,
     RECONNECT_TIMEOUT = 2000,
     startTime,
-    logger = createNoOpLogger()
+    logger = createNoOpLogger(),
+    getCleanURI,
   } = config
 
   /**
@@ -100,6 +102,9 @@ export function createTracker (global, config) {
     }
   }
 
+  /**
+   * Create all search query params for inital get request on WS (deprecated?)
+   */
   function createQueryParams () {
     logger.log('Client:', clientHash)
     logger.log('Session:', sessionHash)
@@ -180,6 +185,7 @@ export function createTracker (global, config) {
       client: clientHash,
       session: sessionHash,
       window: windowHash,
+      crc: crc32(getCleanURI(global.location)),
     })
     flush() // Immediate flush with no timeout
   }

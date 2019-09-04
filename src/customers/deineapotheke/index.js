@@ -1,9 +1,9 @@
+
 /**
- * @module NoenBootstrapper
- * Entry point for the browser build for noen.at
+ * @module DeineApothekeBootstrapper
+ * Entry point for the browser build for deineapotheke.at
  */
 import { createPrettyLogger } from '../../logger/logger'
-// import { loadRecommandationsApp } from './app'
 import config from './config.js'
 
 /**
@@ -11,11 +11,9 @@ import config from './config.js'
  */
 const {
   NAMESPACE,
+  CLIENT_STORAGE_NAMESPACE,
   COOKIE_NAME,
-  // APP_NODE_IDS,
-  // RECOMMENDATION_APP_URL,
-  TRACKING_SERVICE_URL,
-  ARTICLE_SELECTOR,
+  TRACKING_SERVICE_URL
 } = config
 
 async function init (global) {
@@ -45,11 +43,11 @@ async function init (global) {
   /**
    * Load the tracker asynchronously as webpack-chunk
    */
-  const { configureTracker } = await import(/* webpackChunkName: "tracker" */ '../../tracker/standard')
+  const { configureTracker } = await import(/* webpackChunkName: "tracker" */ './tracker')
   const tracker = configureTracker(global, {
     NAMESPACE,
+    CLIENT_STORAGE_NAMESPACE,
     startTime,
-    articleSelector: ARTICLE_SELECTOR,
     endpoint: TRACKING_SERVICE_URL,
     logger,
   })
@@ -60,15 +58,10 @@ async function init (global) {
   global[NAMESPACE] = {
     ...behave,
     tracker,
+    loggerHandler: process.env.NODE_ENV === 'development'
+      ? global.console
+      : undefined,
   }
-
-  /**
-   * Load the recommendations app
-   */
-  // loadRecommandationsApp(global, {
-  //   APP_NODE_IDS,
-  //   RECOMMENDATION_APP_URL,
-  // })
 }
 
 init(global)
