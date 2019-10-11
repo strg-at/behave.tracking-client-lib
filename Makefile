@@ -24,10 +24,10 @@ help: ## This help dialog.
 	done
 
 test: ## Run unit tests. (Not implemented)
-
+	echo "No tests implemented yet."
 
 coverage: ## Run coverage test. (Not implemented)
-
+	echo "Not implemented yet."
 
 lint: ## Run linting.
 	npm run lint
