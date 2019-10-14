@@ -23,34 +23,57 @@ help: ## This help dialog.
 		printf "%s\n" $$help_info; \
 	done
 
-test: ## Run unit tests. (Not implemented)
-	echo "No tests implemented yet."
+test:	## Run unit tests.
+	npm run test
 
-coverage: ## Run coverage test. (Not implemented)
-	echo "Not implemented yet."
+coverage:	## Run test coverage report.
+	@echo "Uses 'make test' to check coverage"
+	make test
 
-lint: ## Run linting.
+coverage-html:	## Run interactive HTML coverage report.
+ifdef ignore-test
+	-make test
+else
+	make test
+endif
+	npm run coverage
+
+lint:	## Run code linter.
 	npm run lint
 
-build: ## Build and tag docker images.
+build:	## Run build process and create docker images.
+ifdef ignore-test
+	-make test
 	-make lint
+else
+	make test
+	make lint
+endif
+	npm run build
 	docker build -t $(TAG):$(VERSION) .
 	docker tag $(TAG):$(VERSION) $(TAG):latest
 	docker tag $(TAG):$(VERSION) $(TAG):$(MAJOR_VERSION)
 	docker tag $(TAG):$(VERSION) $(TAG):$(MAJOR_VERSION).$(MINOR_VERSION)
 
-ship: ## Push docker images to gcp.
+ship:	## Push docker images.
 	 docker push $(TAG):latest
 	 docker push $(TAG):$(MAJOR_VERSION)
 	 docker push $(TAG):$(MAJOR_VERSION).$(MINOR_VERSION)
 	 docker push $(TAG):$(VERSION)
 
-install: ## Install node dependencies.
+install: ## Install the application.
 	npm install
 
-all: ## Build and ship
+all: ## Build and ship.
+ifdef ignore-test
+	make ignore-test=1 build
+else
 	make build
+endif
 	make ship
 
-version:
+version:	## increase vesion type=(major|minor|patch).
 	npm version $(type)
+
+run: ## Run application.
+	npm start
