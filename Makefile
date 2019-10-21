@@ -18,7 +18,7 @@ coverage:	##Run test coverage report.
 	make test
 
 coverage-html:	##Run interactive HTML coverage report.
-ifdef ignore-test
+ifdef force
 	-make test
 else
 	make test
@@ -29,7 +29,7 @@ lint:	##Run code linter.
 	npm run lint
 
 build:	##Run build process and create docker images.
-ifdef ignore-test
+ifdef force
 	-make test
 	-make lint
 else
@@ -52,8 +52,8 @@ install: ##Install the application.
 	npm install
 
 all: ##Build and ship.
-ifdef ignore-test
-	make ignore-test=1 build
+ifdef force
+	make force=1 build
 else
 	make build
 endif
