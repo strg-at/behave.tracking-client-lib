@@ -7,17 +7,17 @@ TAG = eu.gcr.io/logical-sled-220910/strg/behave/tracking-client
 .PHONY: nothing test coverage build ship coverage-html install all version
 
 # https://gist.github.com/prwhite/8168133
-help: ## This help dialog.
-	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "\033[36m%-10s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+help: ##This help dialog.
+	@awk 'BEGIN {FS = ":.*##"; printf "target\t\t\t\thelp\n"; printf "------\t\t\t\t----\n"} /^[a-zA-Z_-]+:.*?##/ { printf "\033[36m%-10s\033[0m\t\t\t%s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-test:	## Run unit tests.
+test:	##Run unit tests.
 	npm run test
 
-coverage:	## Run test coverage report.
+coverage:	##Run test coverage report.
 	@echo "Uses 'make test' to check coverage"
 	make test
 
-coverage-html:	## Run interactive HTML coverage report.
+coverage-html:	##Run interactive HTML coverage report.
 ifdef ignore-test
 	-make test
 else
@@ -25,10 +25,10 @@ else
 endif
 	npm run coverage
 
-lint:	## Run code linter.
+lint:	##Run code linter.
 	npm run lint
 
-build:	## Run build process and create docker images.
+build:	##Run build process and create docker images.
 ifdef ignore-test
 	-make test
 	-make lint
@@ -42,16 +42,16 @@ endif
 	docker tag $(TAG):$(VERSION) $(TAG):$(MAJOR_VERSION)
 	docker tag $(TAG):$(VERSION) $(TAG):$(MAJOR_VERSION).$(MINOR_VERSION)
 
-ship:	## Push docker images.
+ship:	##Push docker images.
 	 docker push $(TAG):latest
 	 docker push $(TAG):$(MAJOR_VERSION)
 	 docker push $(TAG):$(MAJOR_VERSION).$(MINOR_VERSION)
 	 docker push $(TAG):$(VERSION)
 
-install: ## Install the application.
+install: ##Install the application.
 	npm install
 
-all: ## Build and ship.
+all: ##Build and ship.
 ifdef ignore-test
 	make ignore-test=1 build
 else
@@ -59,8 +59,8 @@ else
 endif
 	make ship
 
-version:	## increase vesion type=(major|minor|patch).
+version:	##increase vesion type=(major|minor|patch).
 	npm version $(type)
 
-run: ## Run application.
+run: ##Run application.
 	npm start

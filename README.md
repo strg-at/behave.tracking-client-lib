@@ -17,10 +17,10 @@ Modules are usually concatenated and minified by a simple build system using Ugl
 
 ESLint configuration is available using `eslint:recommended`. New files should include `/* eslint-env browser */` in the first line.
 
-ESLint should be set up properly in your IDE or editor, also make sure to use the local installation. You can also call the linter from the shell via npm script:
+ESLint should be set up properly in your IDE or editor, also make sure to use the local installation. You can also call the linter from the shell via make script:
 
 ```
-$ npm run lint
+$ make lint
 ```
 
 ## API
@@ -38,7 +38,7 @@ TODO: insert link to sphinx docs
 Currently no tests are implemented.
 
 ```
-npm run test
+make test
 ```
 
 © Copyright 2018, strg.at GmbH.
