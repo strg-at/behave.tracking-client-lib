@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "module": "lib/index.js",
   "scripts": {
+    "start": "npm run test && npm run build",
     "build": "babel src -d lib",
     "test": "jest --verbose --coverage",
     "lint": "eslint ./src"
