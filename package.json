@@ -1,35 +1,34 @@
 {
-  "name": "@strg-behave/tracking-client",
-  "version": "2.0.0",
-  "description": "strg.beHave - Tracking Client Modules",
-  "main": "src/track.js",
+  "name": "@strg-behave/tracking-client-lib",
+  "version": "3.0.0",
+  "description": "strg.beHave - Tracking Client Library",
+  "main": "src/index.js",
+  "module": "lib/index.js",
   "scripts": {
-    "start": "npm run lint && cross-env NODE_ENV=production node build/build.js",
-    "dev:infranken": "cross-env CUSTOMER=infranken NODE_ENV=development WATCH=true node build/build.js infranken & node demo/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib",
+    "test": "jest --verbose --coverage",
     "lint": "eslint ./src"
   },
   "author": "Ralf Traunsteiner <ralf@strg.at>",
   "license": "UNLICENSED",
   "dependencies": {
-    "commander": "^2.20.0"
+    "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/plugin-transform-runtime": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "@babel/runtime": "^7.3.4",
-    "babel-eslint": "^10.0.1",
-    "babel-loader": "^8.0.5",
-    "clean-webpack-plugin": "^2.0.0",
-    "cross-env": "^5.2.0",
-    "dotenv-webpack": "^1.7.0",
-    "eslint": "^5.15.1",
-    "eslint-plugin-node": "^8.0.1",
-    "express": "^4.16.4",
-    "standard": "^12.0.1",
-    "webpack": "^4.29.6",
-    "ws": "^6.2.0"
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.5.1",
+    "eslint-plugin-jest": "^22.20.0",
+    "eslint-plugin-node": "^10.0.0",
+    "jest": "^24.9.0",
+    "standard": "^14.3.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns" : [
+      "<rootDir>/lib/"
+    ]
   }
 }

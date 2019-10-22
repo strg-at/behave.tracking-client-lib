@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 dist/
+lib/
+coverage/
 demo/static/
 npm-debug.log*
 yarn-debug.log*

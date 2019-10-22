@@ -1,9 +1,0 @@
-{
-  "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
-    ["@babel/transform-runtime", {
-      "polyfill": false,
-      "regenerator": true
-    }]
-  ]
-}

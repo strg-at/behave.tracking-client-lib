@@ -1,6 +1,5 @@
-import { uuid4, isUuid } from '../utils/utils'
+import { uuid4, isUuid, crc32 } from '../utils/utils'
 import { createNoOpLogger } from '../logger/logger'
-import { crc32 } from './crc'
 
 /**
  * @function createTracker
