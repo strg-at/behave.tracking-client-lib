@@ -7,7 +7,7 @@
   "scripts": {
     "start": "npm run test && npm run build",
     "build": "babel src -d lib",
-    "test": "jest --verbose --coverage",
+    "test": "jest",
     "lint": "eslint ./src"
   },
   "author": "Ralf Traunsteiner <ralf@strg.at>",
@@ -26,10 +26,5 @@
     "eslint-plugin-node": "^10.0.0",
     "jest": "^24.9.0",
     "standard": "^14.3.1"
-  },
-  "jest": {
-    "testPathIgnorePatterns" : [
-      "<rootDir>/lib/"
-    ]
   }
 }
