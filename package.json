@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "description": "strg.beHave - Tracking Client Library",
   "main": "src/index.js",
+  "browser": "lib/index.js",
   "module": "lib/index.js",
   "scripts": {
     "start": "npm run test && npm run build",
