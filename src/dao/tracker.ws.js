@@ -22,8 +22,7 @@ export class TrackerWS {
    * @param {object} event - the event to store
    */
   store (event) {
-    // track an event
-    this.enque(event)
+    this.queue.push(event)
     this.flush()
   }
 
