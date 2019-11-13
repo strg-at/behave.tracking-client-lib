@@ -1,11 +1,18 @@
 /* eslint-env jest */
-import { createTracker } from './index.js'
+import { TrackerAPI } from './api/tracker.api'
+import { TrackerService } from './service/tracker.service'
+import { TrackerWS } from './dao/tracker.ws'
 
-test('Can import createTracker as function', () => {
-  expect(typeof createTracker).toBe('function')
-})
+const config = {
+  NAMESPACE: 'test',
+  ENDPOINT: ' wss://behave.noen.at/ws/event',
+  RECONNECT_TIMEOUT: 60000,
+}
 
-test('Result of createTracker has init function', () => {
-  const tracker = createTracker(global, { NAMESPACE: 'strgBeHave' })
-  expect(typeof tracker.init).toBe('function')
+test('Init produces global namespace, member push is typeof function', () => {
+  const dao = new TrackerWS(config)
+  const service = new TrackerService(dao)
+  new TrackerAPI(service, config)
+  global.test.push(6, 7)
+  expect(typeof global[config.NAMESPACE].push).toBe('function')
 })
