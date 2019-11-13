@@ -1,4 +1,5 @@
-export { createTracker } from './tracker/tracker'
-export { createBreakPointMeter } from './plugins/plugin.breakpoint'
+export { TrackerAPI } from './api/tracker.api'
+export { TrackerService } from './service/tracker.service'
+export { TrackerWS } from './dao/tracker.ws'
+
 export { createScrollTracking } from './plugins/plugin.scroll'
-export { createVisibilityTracking } from './plugins/plugin.visibility'
