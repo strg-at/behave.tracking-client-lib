@@ -1,6 +1,9 @@
+import { uuid4, isUuid } from '../utils/utils'
+
 export class TrackerService {
-  constructor (dao, conf) {
+  constructor (dao, storage) {
     this.dao = dao
+    this.storage = storage
   }
 
   /**
@@ -23,6 +26,10 @@ export class TrackerService {
         console.error(err)
         return
       }
+      event.client = this.getClientId()
+      event.session = this.getSessionId()
+      event.window = this.getWindowId()
+      event.time = event.time || Date.now()
       count++
       this.dao.store(event)
     })
@@ -32,7 +39,6 @@ export class TrackerService {
   /**
    * validate an Event
    * @throws Error when input is not an object or null
-   * @throws Error when event.type is not present or invalid
    * @param {Event} event - the Event to validate
    */
   validateEvent (event) {
@@ -40,15 +46,43 @@ export class TrackerService {
     if (typeof event !== 'object' || event === null) {
       throw new Error('empty or invalid event')
     }
-    if (!event.type ||
-       (event.type !== TrackerService.EVENT_TYPE_WINDOW &&
-        event.type !== TrackerService.EVENT_TYPE_SESSION &&
-        event.type !== TrackerService.EVENT_TYPE_CLIENT)) {
-      throw new Error('invalid tracking event type')
+    if (!event.key) {
+      throw new Error('event key is missing')
+    }
+    if (event.value === undefined) {
+      throw new Error('event value is missing')
     }
     // TODO: add key validation
   }
+
+  getClientId () {
+    let clientId = this.storage.getItem('local', 'client')
+    if (!isUuid(clientId)) {
+      clientId = uuid4()
+      this.storage.setItem('local', 'client', clientId)
+    }
+    return clientId
+  }
+
+  getSessionId () {
+    let sessionId = this.storage.getItem('session', 'session')
+    if (!isUuid(sessionId)) {
+      sessionId = uuid4()
+      this.storage.setItem('session', 'session', sessionId)
+    }
+    return sessionId
+  }
+
+  getWindowId () {
+    let windowId = this.storage.getItem('scope', 'window')
+    if (!isUuid(windowId)) {
+      windowId = this.generateWindowId()
+    }
+    return windowId
+  }
+
+  generateWindowId () {
+    const windowId = uuid4()
+    this.storage.setItem('scope', 'window', windowId)
+  }
 }
-TrackerService.EVENT_TYPE_WINDOW = 'window'
-TrackerService.EVENT_TYPE_SESSION = 'session'
-TrackerService.EVENT_TYPE_CLIENT = 'client'
