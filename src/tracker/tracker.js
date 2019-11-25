@@ -31,8 +31,8 @@ export function createTracker (global, config) {
    */
   let connection = null
   let shuttingDown = false
-  let windowState = {}
-  let queue = []
+  const windowState = {}
+  const queue = []
   let clientState
   let clientHash
   let sessionHash
@@ -69,7 +69,7 @@ export function createTracker (global, config) {
    * Scripts that can be called from the server to update client data.
    * Currently used for data migrations e.g. upgrading the client hash.
    */
-  let remoteScripts = {
+  const remoteScripts = {
     /**
      * @callback updateClientHash
      * @description Callback triggered by the WebSocket. Update the client
@@ -94,7 +94,7 @@ export function createTracker (global, config) {
       return
     }
     while (queue.length) {
-      let msg = JSON.stringify(queue[0])
+      const msg = JSON.stringify(queue[0])
       logger.log('Send', msg)
       connection.send(msg)
       queue.shift()
@@ -145,7 +145,7 @@ export function createTracker (global, config) {
      * Handle server side scripts
      */
     connection.onmessage = function (event) {
-      let data = JSON.parse(event.data)
+      const data = JSON.parse(event.data)
       if (data && typeof remoteScripts[data.fn] === 'function') {
         remoteScripts[data.fn].apply(null, [].concat(data.params))
       }
@@ -193,7 +193,7 @@ export function createTracker (global, config) {
    * @class
    * @name Tracker
    */
-  let tracker = {
+  const tracker = {
     /**
      * @function init
      * @memberof strgBeHave#
@@ -215,7 +215,7 @@ export function createTracker (global, config) {
       let endpoint = url
       syncHashes()
       if (endpoint.indexOf('://') === -1) {
-        let protocol = global.location.protocol === 'https:' ? 'wss' : 'ws'
+        const protocol = global.location.protocol === 'https:' ? 'wss' : 'ws'
         endpoint = protocol + '://' + endpoint
       }
       connect(endpoint)
