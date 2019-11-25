@@ -47,6 +47,7 @@ export class TrackerService {
       throw new Error('empty or invalid event')
     }
     if (!event.key) {
+      console.log(event)
       throw new Error('event key is missing')
     }
     if (event.value === undefined) {
