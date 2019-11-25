@@ -1,5 +1,4 @@
 export class ClientSessionStorage {
-
   getItem (key) {
     const value = global.sessionStorage.getItem(key)
     if (value !== undefined) {

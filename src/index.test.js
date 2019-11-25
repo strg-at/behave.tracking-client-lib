@@ -15,7 +15,7 @@ beforeEach(() => {
   const dao = new TrackerWS(config)
   const clientStorage = new ClientStorage(config)
   const service = new TrackerService(dao, clientStorage, config)
-  new TrackerAPI(service, config)
+  new TrackerAPI(service, config) // eslint-disable-line no-new
   // mock console.error
   console.error = jest.fn()
 })
@@ -54,6 +54,6 @@ test('read global namespace when initializing', () => {
   const dao = new TrackerWS(config)
   const clientStorage = new ClientStorage(config)
   const service = new TrackerService(dao, clientStorage, config)
-  new TrackerAPI(service, config)
+  new TrackerAPI(service, config) // eslint-disable-line no-new
   expect(console.error).toHaveBeenCalledTimes(1)
 })
