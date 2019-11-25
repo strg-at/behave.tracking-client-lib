@@ -1,7 +1,3 @@
-import { createNoOpLogger } from '../logger/logger'
-
-const logger = createNoOpLogger()
-
 export class TrackerWS {
   /**
    * initialize a new TrackerWS DAO Layer
@@ -30,7 +26,7 @@ export class TrackerWS {
    * open the connection to the websocket and handle events
    */
   connect () {
-    logger.log('Open connection:', this.config.ENDPOINT)
+    console.log('Open connection:', this.config.ENDPOINT)
 
     // connect to websocket
     this.connection = new global.WebSocket(this.config.ENDPOINT)
@@ -41,14 +37,14 @@ export class TrackerWS {
     // when connection is closed unexpected, reconnect
     this.connection.onclose = () => {
       if (!this.isShuttingDown) {
-        logger.log(`connection lost, try recomnnect in ${this.config.RECONNECT_TIMEOUT} ms`)
+        console.log(`connection lost, try recomnnect in ${this.config.RECONNECT_TIMEOUT} ms`)
         this.connection = null
         global.setTimeout(() => this.connect(), this.config.RECONNECT_TIMEOUT)
       }
     }
 
     // handle errors quietly
-    this.connection.onerror = (err) => logger.error('Connection failed', err)
+    this.connection.onerror = (err) => console.error('Connection failed', err)
   }
 
   /**
@@ -73,7 +69,7 @@ export class TrackerWS {
 
     while (this.queue.length) {
       const msg = JSON.stringify(this.queue[0])
-      logger.log('Send', msg)
+      console.log('Send', msg)
       this.connection.send(msg)
       this.queue.shift()
     }
