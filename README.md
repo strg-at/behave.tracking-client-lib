@@ -1,3 +1,5 @@
+# !OUTDATED!
+
 # STRG.BeHave Tracking Module
 
 Simple event tracking in the browser for the `tracking-api` Service via WebSocket.

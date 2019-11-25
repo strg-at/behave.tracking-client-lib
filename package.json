@@ -7,9 +7,11 @@
     "start": "npm run test && npm run build",
     "build": "babel src -d lib",
     "test": "jest",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
   },
   "author": "Ralf Traunsteiner <ralf@strg.at>",
+  "contributors": ["Nils Müller <nils.mueller@strg.at"],
   "license": "UNLICENSED",
   "dependencies": {
     "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0"
