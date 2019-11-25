@@ -4,17 +4,10 @@ export class ClientScopeStorage {
   }
 
   getItem (key) {
-    let value = this.data[key]
-    if (value !== undefined) {
-      value = JSON.parse(value)
-    }
-    return value
+    return this.data[key]
   }
 
   setItem (key, value) {
-    if (value !== undefined) {
-      value = JSON.stringify(value)
-    }
     this.data[key] = value
   }
 }
