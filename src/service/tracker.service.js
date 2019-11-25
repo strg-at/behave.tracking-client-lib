@@ -33,6 +33,7 @@ export class TrackerService {
       event.time = event.time || Date.now()
       if (event.content) {
         event.crc = crc32(event.content)
+        event.content = undefined
       }
       count++
       this.dao.store(event)
@@ -82,12 +83,13 @@ export class TrackerService {
     let windowId = this.storage.getItem('scope', 'window')
     if (!isUuid(windowId)) {
       windowId = this.generateWindowId()
-    }
+    }2
     return windowId
   }
 
   generateWindowId () {
     const windowId = uuid4()
     this.storage.setItem('scope', 'window', windowId)
+    return windowId
   }
 }
