@@ -1,8 +1,30 @@
+# System Files
 .DS_Store
+Thumbs.db
+
+# dependencies
 node_modules/
+
+# IDEs and editors
+/.idea
+/.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# env file
+.env
+
+# log files
+**/*.log
+
+# build and test artifacts
+/*.nyc_output
+/coverage
+/build
 dist/
 lib/
-coverage/
 demo/static/
 npm-debug.log*
 yarn-debug.log*
@@ -10,13 +32,7 @@ yarn-error.log*
 /test/unit/coverage/
 /test/e2e/reports/
 selenium-debug.log
+/.sonarlint
 
-# Editor directories and files
-.idea
-.vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-.env
-
+# env file
+/*.env
