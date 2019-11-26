@@ -1,5 +1,5 @@
-import { uuid4, isUuid } from '../utils/uuid4'
-import { crc32 } from '../utils/crc32'
+import { uuid4, isUuid } from '../util/uuid4'
+import { crc32 } from '../util/crc32'
 
 export class TrackerService {
   constructor (dao, storage) {
