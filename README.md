@@ -103,6 +103,6 @@ npm version major|minor|patch
 <br>
 
 ## Authors
-* **Can Attesman** - *first implementation*
+* **Can Atesman** - *first implementation*
 * **[Ralf Traunsteiner](mailto:ralf.traunsteiner@strg.at)** - *second implementation, rewritten most of the code parts and lot of improvements, starts decoupeling*
 * **[Nils Müller](mailto:nils.mueller@strg.at)** - *reduced to tracking library functionality, reimplementation in layered architecture*
