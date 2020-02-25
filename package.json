@@ -1,6 +1,6 @@
 {
   "name": "@strg-behave/tracking-client-lib",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "strg.beHave - Tracking Client Library",
   "main": "src/index.js",
   "scripts": {
