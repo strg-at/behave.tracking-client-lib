@@ -1,5 +1,4 @@
 import { uuid4, isUuid } from '../util/uuid4'
-import { crc32 } from '../util/crc32'
 
 export class TrackerService {
   constructor (dao, storage) {
@@ -31,10 +30,6 @@ export class TrackerService {
       event.session = this.getSessionId()
       event.window = this.getWindowId()
       event.time = event.time || Date.now()
-      if (event.content) {
-        event.crc = crc32(event.content)
-        event.content = undefined
-      }
       count++
       this.dao.store(event)
     })
@@ -83,7 +78,7 @@ export class TrackerService {
     let windowId = this.storage.getItem('scope', 'window')
     if (!isUuid(windowId)) {
       windowId = this.generateWindowId()
-    }2
+    }
     return windowId
   }
 
