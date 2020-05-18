@@ -14,7 +14,6 @@ export class TrackerService {
    * @returns {Number} the number of items properly proceeded
    */
   addEvents (events) {
-    console.log(events)
     let count = 0
     if (!Array.isArray(events)) {
       return count
@@ -47,7 +46,6 @@ export class TrackerService {
       throw new Error('empty or invalid event')
     }
     if (!event.key) {
-      console.log(event)
       throw new Error('event key is missing')
     }
     if (event.value === undefined) {
