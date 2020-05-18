@@ -50,7 +50,7 @@ let event = {
   key: 'test', // required
   value: 'test', // required
   time: Date.now(), // optional
-  content: 'https://www.test.at', // optional, will be send as crc32
+  content: 'https://www.test.at', // optional keys will be passed as plain string
 }
 data.push(event)
 ```
