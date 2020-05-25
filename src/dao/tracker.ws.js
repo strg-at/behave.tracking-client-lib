@@ -69,7 +69,7 @@ export class TrackerWS {
 
     while (this.queue.length) {
       const msg = JSON.stringify(this.queue[0])
-      console.log('Send', msg)
+      // console.log('Send', msg)
       this.connection.send(msg)
       this.queue.shift()
     }

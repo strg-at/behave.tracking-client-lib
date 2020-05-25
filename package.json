@@ -1,6 +1,6 @@
 {
   "name": "@strg-behave/tracking-client-lib",
-  "version": "4.0.3",
+  "version": "4.1.1",
   "description": "strg.beHave - Tracking Client Library",
   "main": "src/index.js",
   "scripts": {
@@ -25,14 +25,14 @@
     "@babel/core": "^7.6.4",
     "@babel/plugin-transform-classes": "^7.7.0",
     "@babel/preset-env": "^7.6.3",
-    "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
+    "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
     "eslint": "^6.5.1",
     "eslint-plugin-jest": "^22.20.0",
     "eslint-plugin-node": "^10.0.0",
+    "http-server": "^0.12.3",
     "jest": "^24.9.0",
-    "standard": "^14.3.1",
-    "http-server": "^0.11.1"
+    "standard": "^14.3.1"
   }
 }
