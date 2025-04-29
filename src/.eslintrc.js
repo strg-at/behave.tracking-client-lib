@@ -6,24 +6,28 @@ module.exports = {
   env: {
     browser: true,
   },
-  parser: "babel-eslint",
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "jest"],
   extends: [
-    'standard',
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jest/recommended"
+
   ],
-  // plugins: [
-  //   'jest',
-  // ],
-  // add your custom rules here
   rules: {
-    // allow paren-less arrow functions
-    'arrow-parens': 0,
-    // variable declaration
-    'one-var': ["error", "never"],
-    'no-var': ["error"],
-    // allow async-await
-    'generator-star-spacing': 0,
-    // allow comma-dangle
-    "comma-dangle": ["error", "only-multiline"],
-    "camelcase": 0,
-  },
+    "@typescript-eslint/member-delimiter-style": ["error", {
+      multiline: {
+        delimiter: "none",
+        requireLast: true,
+      },
+      singleline: {
+        delimiter: "semi",
+        requireLast: false,
+      },
+    }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/ban-ts-ignore": "warn",
+  }
 }

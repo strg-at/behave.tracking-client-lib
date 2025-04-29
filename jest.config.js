@@ -1,7 +1,9 @@
 module.exports = {
   verbose: true,
   collectCoverage: true,
-  testPathIgnorePatterns : [
+  testPathIgnorePatterns: [
     '<rootDir>/lib/'
-  ]
+  ],
+  preset: "ts-jest",
+  testEnvironment: "jsdom"
 };
