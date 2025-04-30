@@ -4,6 +4,14 @@ import { ClientConfiguration, TrackerEvent } from '../util/types'
 import { uuid4, isUuid } from '../util/uuid4'
 
 export class TrackerService {
+  /**
+   * initialize the Tracker Service pushing events to the queue
+   * @param {TrackerWS} dao - the TrackerWS dao layer instance
+   * for sending events over websocket
+   * @param {ClientStorage} storage - the ClientStorage instance
+   * saving / setting global parameters 
+   * @param {ClientConfiguration} config - the configuration object
+   */
   dao: TrackerWS
   storage: ClientStorage
   config: ClientConfiguration

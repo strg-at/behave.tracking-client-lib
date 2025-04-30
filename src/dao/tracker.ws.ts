@@ -3,7 +3,7 @@ import { ClientConfiguration, TrackerEvent } from "../util/types"
 export class TrackerWS {
   /**
    * initialize a new TrackerWS DAO Layer
-   * @param {object} config - the configuration object
+   * @param {ClientConfiguration} config - the configuration object
    */
   config: ClientConfiguration
   queue: TrackerEvent[]

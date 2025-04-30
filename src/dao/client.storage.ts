@@ -4,6 +4,10 @@ import { ClientScopeStorage } from './client.storage/client.scope.storage'
 import { ClientConfiguration, StorageType } from '../util/types'
 
 export class ClientStorage {
+  /**
+   * initialize a new ClientStorage wrapping local, session, and scope storage
+   * @param {ClientConfiguration} config - the configuration object
+   */
   config: ClientConfiguration
   storage: {
     local: ClientLocalStorage
