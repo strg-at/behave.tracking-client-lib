@@ -35,7 +35,7 @@ export class TrackerWS {
     console.log('Open connection:', this.config.ENDPOINT)
 
     // connect to websocket
-    this.connection = new window.WebSocket(this.config.ENDPOINT) as WebSocket
+    this.connection = new window.WebSocket(this.config.ENDPOINT)
 
     // when connection is open flush the queue
     this.connection.onopen = () => this.flush()

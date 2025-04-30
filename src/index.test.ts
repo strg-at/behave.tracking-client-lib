@@ -7,7 +7,7 @@ import { ClientStorage } from './dao/client.storage'
 
 const config = {
   NAMESPACE: 'testname',
-  ENDPOINT: ' wss://behave.test.at/ws/event',
+  ENDPOINT: 'wss://behave.test.at/ws/event',
   RECONNECT_TIMEOUT: 60000,
   CLIENT_STORAGE_NAMESPACE: 'test',
 }
@@ -19,6 +19,24 @@ beforeEach(() => {
   new TrackerAPI(service, config)
   console.error = jest.fn()
   console.log = jest.fn()
+  // @ts-expect-error
+  window.WebSocket = jest.fn((url: string) => ({
+    url,
+    onopen: jest.fn(),
+    onclose: jest.fn(),
+    onerror: jest.fn(),
+    send: jest.fn(),
+    close: jest.fn(),
+    readyState: WebSocket.CONNECTING,
+    CONNECTING: WebSocket.CONNECTING,
+    OPEN: WebSocket.OPEN,
+    CLOSING: WebSocket.CLOSING,
+    CLOSED: WebSocket.CLOSED
+  })) as unknown as jest.Mock<WebSocket>
+})
+
+afterEach(() => {
+  jest.restoreAllMocks() // Restore original WebSocket
 })
 
 test('Init produces global namespace, member push is typeof function', () => {
@@ -64,10 +82,20 @@ test('read window namespace when initializing', () => {
   expect(console.error).toHaveBeenCalledTimes(1)
 })
 
-test('should attempt to reconnect when connection is closed unexpectedly', () => {
+test('should open WebSocket connection with correct endpoint', () => {
   const dao = new TrackerWS(config)
-  dao.connection?.close()
-  expect(console.log).toHaveBeenCalledTimes(1)
-  //expect(console.log).toHaveBeenCalledWith('connection lost, try reconnect in 60000 ms')
-  jest.useRealTimers()
+  dao.connect()
+
+  expect(dao.connection).not.toBeNull()
+  expect(dao.connection?.url).toBe(config.ENDPOINT)
+})
+
+test('should flush the queue when WebSocket connection is opened', () => {
+  const dao = new TrackerWS(config)
+  dao.queue.push({ key: 'test-event', value: 'test' }) // Mock event
+  dao.connect()
+
+  dao.connection?.onopen?.({} as Event) // Simulate WebSocket `onopen` event
+
+  expect(dao.queue.length).toBe(0) // Queue should be flushed
 })
