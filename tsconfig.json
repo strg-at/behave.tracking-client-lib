@@ -1,6 +1,6 @@
 {
   "include": ["src/**/*"],
-  "exclude": ["lib", "node_modules"],
+  "exclude": ["lib", "node_modules", "**/*.test.ts"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
@@ -10,8 +10,8 @@
     "module": "commonjs" /* Specify what module code is generated. */,
 
     /* Emit */
-    "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
-    "emitDeclarationOnly": true /* Only output d.ts files and not JavaScript files. */,
+    "declaration": false /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
+    //"emitDeclarationOnly": true /* Only output d.ts files and not JavaScript files. */,
     "outDir": "./lib" /* Specify an output folder for all emitted files. */,
 
     /* Interop Constraints */
