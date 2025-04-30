@@ -1,8 +1,8 @@
 {
   "name": "@strg/behave-tracking-client-lib",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "description": "STRG.BeHave - Tracking Client Library",
-  "main": "src/index.js",
+  "main": "src/index.ts",
   "scripts": {
     "start": "npm run test && npm run build",
     "build": "tsc",

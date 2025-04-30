@@ -43,6 +43,12 @@ test('Init produces global namespace, member push is typeof function', () => {
   expect(typeof window[config.NAMESPACE].push).toBe('function')
 })
 
+/* Declare here locally to fix type errors in test */
+declare global {
+  interface Window {
+    testname: TrackerAPI
+  }
+}
 test('accept multiple objects in push', () => {
   const result = window.testname.push({ key: 'test', value: 'test' }, { key: 'test2', value: 'test2' })
   expect(console.error).toHaveBeenCalledTimes(0)
@@ -71,7 +77,6 @@ test('accept only valid key value pairs', () => {
 })
 
 test('read window namespace when initializing', () => {
-  // @ts-expect-error
   window[config.NAMESPACE] = []
   // @ts-expect-error
   window.testname.push({ key: 'test', value: 'test' }, { value: 'test' })

@@ -13,3 +13,6 @@ export { TrackerWS } from './dao/tracker.ws'
 
 export { createScrollTracking, createUrlTracking, createReferrerTracking } from './plugins'
 
+export { crc32 } from './util/crc32'
+export { uuid4 } from './util/uuid4'
+
