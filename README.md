@@ -107,3 +107,4 @@ npm version major|minor|patch
 - **Can Atesman** - _first implementation_
 - **[Ralf Traunsteiner](mailto:ralf.traunsteiner@strg.at)** - _second implementation, rewritten most of the code parts and lot of improvements, starts decoupeling_
 - **[Nils Müller](mailto:nils.mueller@strg.at)** - _reduced to tracking library functionality, reimplementation in layered architecture_
+- **[Lilli Joppien](mailto:lilli.joppien@strg.at)** - _rewrite to typescript_
