@@ -19,7 +19,7 @@ export class ClientStorage {
     this.storage = {
       local: new ClientLocalStorage(),
       session: new ClientSessionStorage(),
-      scope: new ClientScopeStorage()
+      scope: new ClientScopeStorage(),
     }
   }
 

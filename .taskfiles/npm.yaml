@@ -1,0 +1,94 @@
+---
+version: 3
+
+vars:
+  USER_ID:
+    sh: id -u
+  GROUP_ID:
+    sh: id -g
+  HOME:
+    sh: echo $HOME
+
+tasks:
+  command:
+    internal: true
+    vars:
+      COMMAND: '{{default "install" .COMMAND}}'
+      VERSION:
+        sh: cat {{.PROJECT_DIR}}/.nvmrc
+    dir: "{{.PROJECT_DIR}}"
+    cmds:
+      - |-
+        docker run --rm -i \
+          -v $PWD:/app \
+          -v /etc/group:/etc/group:ro \
+          -v /etc/passwd:/etc/passwd:ro \
+          -v /etc/shadow:/etc/shadow:ro \
+          -v {{.HOME}}/.npm:/tmp/.npm \
+          --workdir=/app \
+          -e NPM_CONFIG_CACHE=/tmp/.npm \
+          -e HOME=/tmp \
+          -e GITHUB_TOKEN=$GITHUB_TOKEN \
+          -e TF_VAR_github_token=$TF_VAR_github_token \
+          -e NPM_TOKEN=$NPM_TOKEN \
+          --user root:root \
+          --network=host \
+          node:{{.VERSION}}-alpine \
+            npm {{.COMMAND}}
+
+  default:
+    desc: Run a arbitrary npm command. Example `task npm -- help`
+    summary: |
+      Run an arbitrary npm command in a docker container. Example `task npm -- help`
+
+      Used for installing packages, updating packages, ...
+      Examples:
+      * `task npm -- install <package name>`
+      * `task npm -- update`
+      * `task npm -- ls <package name>`
+      * `task npm -- ci`
+    cmds:
+      - task: command
+        vars: { COMMAND: "{{.CLI_ARGS}}" }
+
+  install:
+    desc: Install all dependencies defined for npm and write package-lock.json.
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "install" }
+
+  ci:
+    desc: Clean install all dependencies defined for npm.
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "ci" }
+
+  build:
+    desc: Build the production bundle.
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "run build" }
+
+  lint:
+    desc: Run lint on the code base.
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "run lint" }
+
+  lint:fix:
+    desc: Run lint on the code base and automatically fix errors.
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "run lint:fix" }
+
+  test:
+    desc: Run all tests.
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "run test" }

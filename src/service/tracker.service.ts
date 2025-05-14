@@ -9,7 +9,7 @@ export class TrackerService {
    * @param {TrackerWS} dao - the TrackerWS dao layer instance
    * for sending events over websocket
    * @param {ClientStorage} storage - the ClientStorage instance
-   * saving / setting global parameters 
+   * saving / setting global parameters
    * @param {ClientConfiguration} config - the configuration object
    */
   dao: TrackerWS
@@ -33,7 +33,7 @@ export class TrackerService {
     if (!Array.isArray(events)) {
       return count
     }
-    events.forEach(event => {
+    events.forEach((event) => {
       try {
         this.validateEvent(event)
       } catch (err) {
@@ -70,7 +70,6 @@ export class TrackerService {
     // TODO: add key validation
   }
 
-
   /**
    * Retrieves the client ID from 'local' storage or generates and stores a new one.
    * @returns {string} The client ID, which is a valid UUID.
@@ -97,9 +96,9 @@ export class TrackerService {
     return sessionId
   }
   /**
-    * Retrieves the window ID from 'scope' storage or generates and stores a new one.
-    * @returns {string} The window ID, which is a valid UUID.
-    */
+   * Retrieves the window ID from 'scope' storage or generates and stores a new one.
+   * @returns {string} The window ID, which is a valid UUID.
+   */
   getWindowId() {
     let windowId = this.storage.getItem('scope', 'window') as string
     if (!isUuid(windowId)) {

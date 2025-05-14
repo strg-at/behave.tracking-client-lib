@@ -1,0 +1,16 @@
+---
+version: "3"
+
+vars:
+  PROJECT_DIR:
+    sh: "git rev-parse --show-toplevel"
+
+includes:
+  pre-commit: .taskfiles/pre-commit.yaml
+  npm: .taskfiles/npm.yaml
+
+tasks:
+  start:
+    desc: Start the development server.
+    cmds:
+      - task npm:dev

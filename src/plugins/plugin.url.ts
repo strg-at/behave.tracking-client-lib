@@ -1,9 +1,9 @@
-import { PluginEventCallback } from "../util/types"
+import { PluginEventCallback } from '../util/types'
 
 /**
  * @module strgBeHave/tracking/plugin/url
  */
-export function createUrlTracking(_ = null) {
+export function createUrlTracking() {
   const URL_EVENT = 'url'
 
   const getUriFromLocation = function () {

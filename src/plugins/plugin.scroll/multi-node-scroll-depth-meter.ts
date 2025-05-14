@@ -3,7 +3,7 @@
  */
 
 import { throttle } from './throttle'
-import { ScrollDepthEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from "../../util/types"
+import { ScrollDepthEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from '../../util/types'
 
 export class MultiNodeScrollDepthMeter {
   DOMNodes: HTMLElement[]
@@ -20,7 +20,13 @@ export class MultiNodeScrollDepthMeter {
   trackedGaugePoints: Record<number, boolean>
   scrollHandler: () => void | boolean | undefined
 
-  constructor(DOMNodes: HTMLElement[], eventOptions: ScrollDepthEventOptions, callbacks: PluginEventCallbacks, BREAKPOINT_EVENT: string, DEFAULTS: ScrollTrackingDefaults) {
+  constructor(
+    DOMNodes: HTMLElement[],
+    eventOptions: ScrollDepthEventOptions,
+    callbacks: PluginEventCallbacks,
+    BREAKPOINT_EVENT: string,
+    DEFAULTS: ScrollTrackingDefaults
+  ) {
     this.DOMNodes = DOMNodes
     this.id = eventOptions.id ?? ''
     this.eventKey = eventOptions.eventKey
@@ -51,7 +57,7 @@ export class MultiNodeScrollDepthMeter {
           right: Math.max(acc.right, rect.right),
           bottom: Math.max(acc.bottom, rect.bottom),
           left: Math.min(acc.left, rect.left),
-          height: Infinity
+          height: Infinity,
         }
       },
       { top: Infinity, right: -Infinity, bottom: -Infinity, left: Infinity, height: Infinity }

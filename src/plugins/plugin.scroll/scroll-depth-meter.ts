@@ -2,7 +2,7 @@
  * @class strgBeHave/tracking/plugin/scroll/ScrollDepthMeter
  */
 
-import { ScrollDepthEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from "../../util/types"
+import { ScrollDepthEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from '../../util/types'
 import { throttle } from './throttle'
 
 export class ScrollDepthMeter {
@@ -20,7 +20,13 @@ export class ScrollDepthMeter {
   trackedGaugePoints: Record<number, boolean>
   scrollHandler: () => void | boolean | undefined
 
-  constructor(DOMNode: HTMLElement, eventOptions: ScrollDepthEventOptions, callbacks: PluginEventCallbacks, BREAKPOINT_EVENT: string, DEFAULTS: ScrollTrackingDefaults) {
+  constructor(
+    DOMNode: HTMLElement,
+    eventOptions: ScrollDepthEventOptions,
+    callbacks: PluginEventCallbacks,
+    BREAKPOINT_EVENT: string,
+    DEFAULTS: ScrollTrackingDefaults
+  ) {
     this.DOMNode = DOMNode
     this.id = eventOptions.id ?? ''
     this.eventKey = eventOptions.eventKey

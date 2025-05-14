@@ -1,4 +1,4 @@
-import { ThrottleOptions } from "../../util/types"
+import { ThrottleOptions } from '../../util/types'
 
 /**
  * @function throttle
@@ -6,7 +6,9 @@ import { ThrottleOptions } from "../../util/types"
  * src: http://underscorejs.org/docs/underscore.html#section-82
  */
 export function throttle(func: () => boolean | undefined | void, wait: number, options: ThrottleOptions = {}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let context: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let args: any
   let result: boolean | undefined | void
   let timeout: NodeJS.Timeout | null = null
@@ -18,11 +20,13 @@ export function throttle(func: () => boolean | undefined | void, wait: number, o
     result = func.apply(context, args)
     if (!timeout) context = args = null
   }
-  return  () => {
+  return () => {
     const now = Date.now()
     if (!previous && options.leading === false) previous = now
     const remaining = wait - (now - previous)
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     context = this
+    // eslint-disable-next-line prefer-rest-params
     args = arguments
     if (remaining <= 0 || remaining > wait) {
       if (timeout) {

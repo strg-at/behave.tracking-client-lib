@@ -2,7 +2,7 @@
  * @module strgBeHave/tracking/plugin/scroll/VisibilityMeter
  */
 
-import { VisibilityEventOptions, PluginEventCallbacks } from "../../util/types"
+import { VisibilityEventOptions, PluginEventCallbacks } from '../../util/types'
 
 export class VisibilityMeter {
   eventKey: string

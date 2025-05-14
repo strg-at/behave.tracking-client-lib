@@ -19,7 +19,7 @@ beforeEach(() => {
   new TrackerAPI(service, config)
   console.error = jest.fn()
   console.log = jest.fn()
-  // @ts-expect-error
+  // @ts-expect-error inject mock WebSocket into the global window object
   window.WebSocket = jest.fn((url: string) => ({
     url,
     onopen: jest.fn(),
@@ -31,7 +31,7 @@ beforeEach(() => {
     CONNECTING: WebSocket.CONNECTING,
     OPEN: WebSocket.OPEN,
     CLOSING: WebSocket.CLOSING,
-    CLOSED: WebSocket.CLOSED
+    CLOSED: WebSocket.CLOSED,
   })) as unknown as jest.Mock<WebSocket>
 })
 
@@ -56,21 +56,21 @@ test('accept multiple objects in push', () => {
 })
 
 test('do not accept on missing key in object', () => {
-  // @ts-expect-error
+  // @ts-expect-error ignore error
   const result = window.testname.push({ key: undefined, value: 'test' }, { value: 'test' })
   expect(console.error).toHaveBeenCalledTimes(2)
   expect(result).toBe(0)
 })
 
 test('do not accept on missing value in object', () => {
-  // @ts-expect-error
+  // @ts-expect-error ignore error
   const result = window.testname.push({ key: 'test', value: undefined }, { key: 'test' })
   expect(console.error).toHaveBeenCalledTimes(2)
   expect(result).toBe(0)
 })
 
 test('accept only valid key value pairs', () => {
-  // @ts-expect-error
+  // @ts-expect-error ignore error
   const result = window.testname.push({ key: 'test', value: undefined }, { key: 'test', value: 'test' })
   expect(console.error).toHaveBeenCalledTimes(1)
   expect(result).toBe(1)
@@ -78,7 +78,7 @@ test('accept only valid key value pairs', () => {
 
 test('read window namespace when initializing', () => {
   window[config.NAMESPACE] = []
-  // @ts-expect-error
+  // @ts-expect-error ignore error
   window.testname.push({ key: 'test', value: 'test' }, { value: 'test' })
   const dao = new TrackerWS(config)
   const clientStorage = new ClientStorage(config)
