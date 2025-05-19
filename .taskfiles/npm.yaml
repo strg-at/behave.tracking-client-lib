@@ -98,3 +98,10 @@ tasks:
     cmds:
       - task: command
         vars: { COMMAND: "run type-check" }
+
+  coverage:
+    desc: Run tests and open coverage report in browser.
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "run coverage" }
