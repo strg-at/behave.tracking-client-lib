@@ -1,6 +1,33 @@
+<!-- markdownlint-disable MD041 -->
+<!-- markdownlint-disable MD033 -->
+<!-- markdownlint-disable MD028 -->
+
 # BeHave Tracking Client
 
 This library contains the BeHave tracking client, it is intended to use it inside a client application integration and not standalone.
+
+<details>
+  <summary style="font-size:1.2em;">Table of Contents</summary>
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+- [Specification](#specification)
+- [How to use](#how-to-use)
+  - [config](#config)
+  - [init](#init)
+  - [track](#track)
+- [Development](#development)
+  - [Installation](#installation)
+  - [Testing](#testing)
+  - [Coverage Report](#coverage-report)
+  - [ESLint](#eslint)
+- [Versioning](#versioning)
+- [Authors](#authors)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+</details>
 
 ## Getting Started
 
