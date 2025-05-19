@@ -31,7 +31,6 @@ tasks:
           -e GITHUB_TOKEN=$GITHUB_TOKEN \
           -e TF_VAR_github_token=$TF_VAR_github_token \
           -e NPM_TOKEN=$NPM_TOKEN \
-          --user root:root \
           --network=host \
           node:{{.VERSION}}-alpine \
             npm {{.COMMAND}}
@@ -92,3 +91,10 @@ tasks:
     cmds:
       - task: command
         vars: { COMMAND: "run test" }
+
+  type-check:
+    desc: Run TypeScript type checking only (no emit).
+    interactive: true
+    cmds:
+      - task: command
+        vars: { COMMAND: "run type-check" }

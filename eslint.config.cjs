@@ -6,7 +6,7 @@ const prettier = require('eslint-config-prettier')
 
 module.exports = [
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['src/**/*.ts', 'src/**/*.tsx'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -33,7 +33,7 @@ module.exports = [
     },
   },
   {
-    files: ['**/*.js'],
+    files: ['src/**/*.js'],
     languageOptions: {
       ecmaVersion: 2020,
       sourceType: 'module',

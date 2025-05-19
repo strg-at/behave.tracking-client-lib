@@ -83,11 +83,17 @@ repos:
     hooks:
       - id: gitleaks
 
-  - repo: https://github.com/tyriis/pre-commit-npm
-    rev: v0.2
+  - repo: local
     hooks:
-      - id: npm-run-test
-        files: \.ts$
-        types:
-          - file
-      - id: npm-run-lint
+      - id: lint-code
+        name: lint-code
+        entry: "task npm:lint --"
+        language: system
+        types_or: [javascript, ts, tsx, vue]
+        pass_filenames: true
+      - id: type-check
+        name: type-check
+        entry: "task npm:type-check"
+        language: system
+        types_or: [javascript, ts, tsx, vue]
+        pass_filenames: false
