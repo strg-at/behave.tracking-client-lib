@@ -1,4 +1,4 @@
-import { ClientConfiguration, TrackerEvent } from "../util/types"
+import { ClientConfiguration, TrackerEvent } from '../util/types'
 
 export class TrackerWS {
   /**

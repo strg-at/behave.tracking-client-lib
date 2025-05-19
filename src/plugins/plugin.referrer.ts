@@ -1,4 +1,4 @@
-import { PluginEventCallback } from "../util/types"
+import { PluginEventCallback } from '../util/types'
 
 /**
  * @module strgBeHave/tracking/plugin/referrer

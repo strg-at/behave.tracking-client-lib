@@ -1,9 +1,9 @@
 import { TrackerAPI } from './api/tracker.api'
 
 declare global {
-    interface Window {
-        [namespace: string]: TrackerAPI
-    }
+  interface Window {
+    [namespace: string]: TrackerAPI
+  }
 }
 
 export { TrackerAPI } from './api/tracker.api'
@@ -15,4 +15,3 @@ export { createScrollTracking, createUrlTracking, createReferrerTracking } from 
 
 export { crc32 } from './util/crc32'
 export { uuid4 } from './util/uuid4'
-

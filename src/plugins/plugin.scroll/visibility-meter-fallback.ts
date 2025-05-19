@@ -2,7 +2,7 @@
  * @module strgBeHave/tracking/plugin/scroll/VisibilityMeterFallback
  */
 
-import { VisibilityEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from "../../util/types"
+import { VisibilityEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from '../../util/types'
 import { throttle } from './throttle'
 
 export class VisibilityMeterFallback {
@@ -14,7 +14,13 @@ export class VisibilityMeterFallback {
   DEFAULTS: ScrollTrackingDefaults
   scrollHandler: () => void | boolean | undefined
 
-  constructor(DOMNode: HTMLElement, eventOptions: VisibilityEventOptions, callbacks: PluginEventCallbacks, VISIBILITY_EVENT: string, DEFAULTS: ScrollTrackingDefaults) {
+  constructor(
+    DOMNode: HTMLElement,
+    eventOptions: VisibilityEventOptions,
+    callbacks: PluginEventCallbacks,
+    VISIBILITY_EVENT: string,
+    DEFAULTS: ScrollTrackingDefaults
+  ) {
     this.eventKey = eventOptions.eventKey
     this.eventValue = eventOptions.eventValue
     this.DOMNode = DOMNode

@@ -1,10 +1,10 @@
-import { TrackerService } from "../service/tracker.service"
-import { ClientConfiguration, TrackerEvent } from "../util/types"
+import { TrackerService } from '../service/tracker.service'
+import { ClientConfiguration, TrackerEvent } from '../util/types'
 
 export class TrackerAPI {
   service: TrackerService
   conf: ClientConfiguration
-  
+
   constructor(service: TrackerService, conf: ClientConfiguration) {
     this.service = service
     this.conf = conf
@@ -21,7 +21,7 @@ export class TrackerAPI {
     const currentData = window[this.conf.NAMESPACE]
     window[this.conf.NAMESPACE] = this
     if (currentData !== undefined && Array.isArray(currentData)) {
-      currentData.forEach(event => this.push(event))
+      currentData.forEach((event) => this.push(event))
     }
   }
 }

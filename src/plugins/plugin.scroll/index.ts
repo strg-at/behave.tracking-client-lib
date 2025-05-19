@@ -6,7 +6,12 @@ import { ScrollDepthMeter } from './scroll-depth-meter'
 import { MultiNodeScrollDepthMeter } from './multi-node-scroll-depth-meter'
 import { VisibilityMeter } from './visibility-meter'
 import { VisibilityMeterFallback } from './visibility-meter-fallback'
-import { ScrollDepthEventOptions, PluginEventCallbacks, VisibilityEventOptions, PluginEventCallback } from "../../util/types"
+import {
+  ScrollDepthEventOptions,
+  PluginEventCallbacks,
+  VisibilityEventOptions,
+  PluginEventCallback,
+} from '../../util/types'
 
 export function createScrollTracking() {
   const BREAKPOINT_EVENT = 'breakpoint'
@@ -23,7 +28,10 @@ export function createScrollTracking() {
   }
 
   return {
-    visibility(selector: HTMLElement | string, { eventKey, eventValue = 1, visibilityThreshold }: VisibilityEventOptions) {
+    visibility(
+      selector: HTMLElement | string,
+      { eventKey, eventValue = 1, visibilityThreshold }: VisibilityEventOptions
+    ) {
       const DOMNode = typeof selector === 'string' ? document.querySelector(selector) : selector
       if ('IntersectionObserver' in window) {
         return new VisibilityMeter(
@@ -50,7 +58,7 @@ export function createScrollTracking() {
       )
     },
     scrollDepth(selector: HTMLElement | string, { eventKey, gaugePointInterval = null }: ScrollDepthEventOptions) {
-      const DOMNode = typeof selector === 'string' ? document.querySelector(selector) : selector 
+      const DOMNode = typeof selector === 'string' ? document.querySelector(selector) : selector
       return new ScrollDepthMeter(
         DOMNode as HTMLElement,
         {

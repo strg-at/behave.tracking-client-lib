@@ -1,6 +1,0 @@
-dist/**/*
-demo/**/*
-*.html
-.eslintrc.js
-tsconfig.json
-node_modules
