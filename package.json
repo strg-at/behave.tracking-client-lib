@@ -2,7 +2,16 @@
   "name": "@strg/behave-tracking-client-lib",
   "version": "4.3.0-rc.2",
   "description": "STRG.BeHave - Tracking Client Library",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./src/*": "./src/*"
+  },
   "scripts": {
     "start": "npm run test && npm run build",
     "build": "tsc",
@@ -11,7 +20,8 @@
     "coverage:dev": "npm run test && http-server ./coverage/lcov-report/ -p 8888 -o",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run lint && npm run type-check && npm run build && npm test"
   },
   "keywords": [
     "BeHave",
@@ -51,5 +61,11 @@
   "dependencies": {
     "eslint": "9.26.0",
     "eslint-config-prettier": "10.1.5"
-  }
+  },
+  "files": [
+    "lib",
+    "src",
+    "README.md",
+    "LICENSE"
+  ]
 }
