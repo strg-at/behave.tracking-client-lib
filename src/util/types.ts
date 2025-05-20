@@ -41,7 +41,7 @@ export type TrackingRect = {
 
 export type VisibilityEventOptions = {
   eventKey: string
-  eventValue: number
+  eventValue: string | number
   visibilityThreshold?: number
 }
 

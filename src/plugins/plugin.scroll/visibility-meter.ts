@@ -6,7 +6,7 @@ import type { VisibilityEventOptions, PluginEventCallbacks } from '../../util/ty
 
 export class VisibilityMeter {
   eventKey: string
-  eventValue: number
+  eventValue: string | number
   VISIBILITY_EVENT: string
   callbacks: PluginEventCallbacks
   visibilityThreshold: number

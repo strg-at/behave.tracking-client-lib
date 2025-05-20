@@ -13,7 +13,7 @@ import { throttle } from './throttle'
 export class VisibilityMeterFallback {
   DOMNode: HTMLElement
   eventKey: string
-  eventValue: number
+  eventValue: string | number
   VISIBILITY_EVENT: string
   callbacks: PluginEventCallbacks
   DEFAULTS: ScrollTrackingDefaults
