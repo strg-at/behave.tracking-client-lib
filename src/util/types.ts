@@ -42,7 +42,7 @@ export type TrackingRect = {
 export type VisibilityEventOptions = {
   eventKey: string
   eventValue: number
-  visibilityThreshold: number
+  visibilityThreshold?: number
 }
 
 export type ScrollDepthEventOptions = {

@@ -20,7 +20,7 @@ export class VisibilityMeter {
   ) {
     this.eventKey = eventOptions.eventKey
     this.eventValue = eventOptions.eventValue
-    this.visibilityThreshold = eventOptions.visibilityThreshold
+    this.visibilityThreshold = eventOptions.visibilityThreshold !== undefined ? eventOptions.visibilityThreshold : 65
     this.callbacks = callbacks
     this.VISIBILITY_EVENT = VISIBILITY_EVENT
 

@@ -27,7 +27,7 @@ export class VisibilityMeterFallback {
     DEFAULTS: ScrollTrackingDefaults
   ) {
     this.eventKey = eventOptions.eventKey
-    this.eventValue = eventOptions.eventValue
+    this.eventValue = Number(eventOptions.eventValue)
     this.DOMNode = DOMNode
     this.callbacks = callbacks
     this.VISIBILITY_EVENT = VISIBILITY_EVENT

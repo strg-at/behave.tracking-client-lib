@@ -30,7 +30,7 @@ export function createScrollTracking() {
   return {
     visibility(
       selector: HTMLElement | string,
-      { eventKey, eventValue = 1, visibilityThreshold }: VisibilityEventOptions
+      { eventKey, eventValue = 1, visibilityThreshold = 65 }: VisibilityEventOptions
     ) {
       const DOMNode = typeof selector === 'string' ? document.querySelector(selector) : selector
       if ('IntersectionObserver' in window) {
