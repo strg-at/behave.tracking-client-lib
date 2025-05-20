@@ -4,7 +4,7 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
-    "declaration": false,
+    "declaration": true,
     "outDir": "./lib",
     "isolatedModules": true,
     "esModuleInterop": true,
