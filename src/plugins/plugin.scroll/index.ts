@@ -6,7 +6,7 @@ import { ScrollDepthMeter } from './scroll-depth-meter'
 import { MultiNodeScrollDepthMeter } from './multi-node-scroll-depth-meter'
 import { VisibilityMeter } from './visibility-meter'
 import { VisibilityMeterFallback } from './visibility-meter-fallback'
-import {
+import type {
   ScrollDepthEventOptions,
   PluginEventCallbacks,
   VisibilityEventOptions,

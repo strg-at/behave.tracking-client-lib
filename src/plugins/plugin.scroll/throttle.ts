@@ -1,4 +1,4 @@
-import { ThrottleOptions } from '../../util/types'
+import type { ThrottleOptions } from '../../util/types'
 
 /**
  * @function throttle

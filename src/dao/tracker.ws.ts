@@ -1,4 +1,4 @@
-import { ClientConfiguration, TrackerEvent } from '../util/types'
+import type { ClientConfiguration, TrackerEvent } from '../util/types'
 
 export class TrackerWS {
   /**
@@ -75,7 +75,6 @@ export class TrackerWS {
 
     while (this.queue.length) {
       const msg = JSON.stringify(this.queue[0])
-      // console.log('Send', msg)
       this.connection.send(msg)
       this.queue.shift()
     }

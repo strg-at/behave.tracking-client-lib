@@ -1,5 +1,5 @@
 import { TrackerService } from '../service/tracker.service'
-import { ClientConfiguration, TrackerEvent } from '../util/types'
+import type { ClientConfiguration, TrackerEvent } from '../util/types'
 
 export class TrackerAPI {
   service: TrackerService

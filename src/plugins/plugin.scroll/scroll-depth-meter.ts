@@ -2,7 +2,12 @@
  * @class strgBeHave/tracking/plugin/scroll/ScrollDepthMeter
  */
 
-import { ScrollDepthEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from '../../util/types'
+import type {
+  ScrollDepthEventOptions,
+  PluginEventCallbacks,
+  ScrollTrackingDefaults,
+  TrackingRect,
+} from '../../util/types'
 import { throttle } from './throttle'
 
 export class ScrollDepthMeter {

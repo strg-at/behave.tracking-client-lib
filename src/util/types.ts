@@ -9,21 +9,16 @@ export type StorageType = 'local' | 'session' | 'scope'
 
 export type TrackerEvent = {
   key: string
-  value: string
+  value: string | number | null
   session?: string
   window?: string
   client?: string
   time?: number
   content?: string
-}
-export type PluginEvent = {
-  key: string
-  value: string | number | null
-  time: number
-  [key: string]: string | number | null
+  crc?: string
 }
 
-export type PluginEventCallback = (event: PluginEvent) => void
+export type PluginEventCallback = (event: TrackerEvent) => void
 
 export type EventName = 'visibility' | 'breakpoint'
 

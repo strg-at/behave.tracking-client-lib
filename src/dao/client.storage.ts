@@ -1,7 +1,7 @@
 import { ClientLocalStorage } from './client.storage/client.local.storage'
 import { ClientSessionStorage } from './client.storage/client.session.storage'
 import { ClientScopeStorage } from './client.storage/client.scope.storage'
-import { ClientConfiguration, StorageType } from '../util/types'
+import type { ClientConfiguration, StorageType } from '../util/types'
 
 export class ClientStorage {
   /**

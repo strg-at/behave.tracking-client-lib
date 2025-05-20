@@ -3,7 +3,12 @@
  */
 
 import { throttle } from './throttle'
-import { ScrollDepthEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from '../../util/types'
+import type {
+  ScrollDepthEventOptions,
+  PluginEventCallbacks,
+  ScrollTrackingDefaults,
+  TrackingRect,
+} from '../../util/types'
 
 export class MultiNodeScrollDepthMeter {
   DOMNodes: HTMLElement[]

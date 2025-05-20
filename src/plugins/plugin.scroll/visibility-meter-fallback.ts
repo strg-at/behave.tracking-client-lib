@@ -2,7 +2,12 @@
  * @module strgBeHave/tracking/plugin/scroll/VisibilityMeterFallback
  */
 
-import { VisibilityEventOptions, PluginEventCallbacks, ScrollTrackingDefaults, TrackingRect } from '../../util/types'
+import type {
+  VisibilityEventOptions,
+  PluginEventCallbacks,
+  ScrollTrackingDefaults,
+  TrackingRect,
+} from '../../util/types'
 import { throttle } from './throttle'
 
 export class VisibilityMeterFallback {

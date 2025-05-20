@@ -1,6 +1,6 @@
 import { ClientStorage } from '../dao/client.storage'
 import { TrackerWS } from '../dao/tracker.ws'
-import { ClientConfiguration, TrackerEvent } from '../util/types'
+import type { ClientConfiguration, TrackerEvent } from '../util/types'
 import { uuid4, isUuid } from '../util/uuid4'
 
 export class TrackerService {

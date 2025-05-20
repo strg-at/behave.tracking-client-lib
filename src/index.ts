@@ -15,3 +15,5 @@ export { createScrollTracking, createUrlTracking, createReferrerTracking } from 
 
 export { crc32 } from './util/crc32'
 export { uuid4 } from './util/uuid4'
+
+export type * from './util/types'
