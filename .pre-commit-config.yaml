@@ -38,6 +38,7 @@ repos:
       - id: trailing-whitespace
         args:
           - --markdown-linebreak-ext=md
+      - id: no-commit-to-branch
 
   - repo: https://github.com/adrienverge/yamllint
     rev: v1.37.1
@@ -68,6 +69,11 @@ repos:
           - --config
           - .markdownlint.yaml
 
+  - repo: https://github.com/k8s-at-home/sops-pre-commit
+    rev: v2.1.1
+    hooks:
+      - id: forbid-secrets
+
   - repo: https://github.com/rbubley/mirrors-prettier
     rev: v3.5.3
     hooks:
@@ -78,7 +84,7 @@ repos:
           - --config
           - .prettierrc.cjs
 
-  - repo: https://github.com/zricethezav/gitleaks
+  - repo: https://github.com/gitleaks/gitleaks
     rev: v8.26.0
     hooks:
       - id: gitleaks
