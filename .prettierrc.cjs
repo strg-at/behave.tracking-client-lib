@@ -1,0 +1,16 @@
+module.exports = {
+  bracketSameLine: true,
+  trailingComma: 'es5',
+  tabWidth: 2,
+  semi: false,
+  singleQuote: true,
+  printWidth: 120,
+  overrides: [
+    {
+      files: ['*.yaml', '*.json5', '*.yml', '.dockerfile'],
+      options: {
+        singleQuote: false,
+      },
+    },
+  ],
+}

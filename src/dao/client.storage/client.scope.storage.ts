@@ -1,13 +1,14 @@
 export class ClientScopeStorage {
-  constructor () {
+  data: Record<string, string>
+  constructor() {
     this.data = {}
   }
 
-  getItem (key) {
+  getItem(key: string) {
     return this.data[key]
   }
 
-  setItem (key, value) {
+  setItem(key: string, value: string) {
     this.data[key] = value
   }
 }
