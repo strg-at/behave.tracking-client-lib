@@ -11,7 +11,14 @@ export { TrackerService } from './service/tracker.service'
 export { ClientStorage } from './dao/client.storage'
 export { TrackerWS } from './dao/tracker.ws'
 
-export { createScrollTracking, createUrlTracking, createReferrerTracking } from './plugins'
+export {
+  createScrollTracking,
+  createUrlTracking,
+  createReferrerTracking,
+  type ScrollTracking,
+  type UrlTracking,
+  type ReferrerTracking,
+} from './plugins'
 
 export { crc32 } from './util/crc32'
 export { uuid4 } from './util/uuid4'
