@@ -47,7 +47,7 @@ export type VisibilityEventOptions = {
 
 export type ScrollDepthEventOptions = {
   eventKey: string
-  gaugePointInterval: number | null
+  gaugePointInterval?: number | null
   id?: string
   value?: string | number
 }
