@@ -1,5 +1,9 @@
 import { type PluginEventCallback } from '../util/types'
 
+export interface ReferrerTracking {
+  on(event: string, callback: PluginEventCallback): void
+}
+
 /**
  * @module strgBeHave/tracking/plugin/referrer
  */

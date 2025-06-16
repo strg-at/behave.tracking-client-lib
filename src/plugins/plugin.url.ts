@@ -1,5 +1,10 @@
 import { type PluginEventCallback } from '../util/types'
 
+export interface UrlTracking {
+  on(event: string, callback: PluginEventCallback): void
+  getUriFromLocation(): string
+}
+
 /**
  * @module strgBeHave/tracking/plugin/url
  */
