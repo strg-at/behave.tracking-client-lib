@@ -1,6 +1,6 @@
 {
   "name": "@strg/behave-tracking-client-lib",
-  "version": "4.3.0-rc.5",
+  "version": "5.0.3",
   "description": "STRG.BeHave - Tracking Client Library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -13,7 +13,17 @@ import type {
   PluginEventCallback,
 } from '../../util/types'
 
-export function createScrollTracking() {
+export interface ScrollTracking {
+  visibility: (
+    selector: HTMLElement | string,
+    options: VisibilityEventOptions
+  ) => VisibilityMeter | VisibilityMeterFallback
+  scrollDepth: (selector: HTMLElement | string, options: ScrollDepthEventOptions) => ScrollDepthMeter
+  multiNodeScrollDepth: (domNodes: HTMLElement[], options: ScrollDepthEventOptions) => MultiNodeScrollDepthMeter
+  on: (event: 'breakpoint' | 'visibility', callback: PluginEventCallback) => void
+}
+
+export function createScrollTracking(): ScrollTracking {
   const BREAKPOINT_EVENT = 'breakpoint'
   const VISIBILITY_EVENT = 'visibility'
 
