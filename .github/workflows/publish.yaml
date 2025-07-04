@@ -1,0 +1,17 @@
+---
+name: publish package
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+      - "*.*.*"
+    paths-ignore:
+      - .github/**
+
+jobs:
+  publish:
+    name: publish package
+    uses: strg-at/github-workflows/.github/workflows/npm-publish.yaml@dad8413fae6ed6777dcce40a471543dc1150db6a # v1.11.1
+    with:
+      runner: '["ubuntu-latest"]'
