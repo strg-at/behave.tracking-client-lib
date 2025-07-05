@@ -1,19 +1,9 @@
 {
-  enabled: true,
-  semanticCommits: "enabled",
-  dependencyDashboard: true,
-  dependencyDashboardTitle: ":robot: Renovate Dashboard",
-  suppressNotifications: ["prIgnoreNotification"],
-  rebaseWhen: "conflicted",
-  labels: ["dependencies"],
-  packageRules: [
-    {
-      matchPackagePatterns: ["eslint"],
-      labels: ["linting"],
-    },
-    {
-      matchDepTypes: ["optionalDependencies"],
-      addLabels: ["optional"],
-    },
+  extends: [
+    "github>strg-at/renovate-config:base.json5",
+    "github>strg-at/renovate-config//github-actions/silent-automerge.json5",
+    "github>strg-at/renovate-config//pre-commit/silent-automerge.json5",
+    "github>strg-at/renovate-config//npm/automerge-no-status-checks.json5",
+    "github>strg-at/renovate-config//nvm/automerge-no-status-checks.json5",
   ],
 }
