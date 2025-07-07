@@ -85,7 +85,7 @@ repos:
           - .prettierrc.cjs
 
   - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.26.0
+    rev: v8.27.2
     hooks:
       - id: gitleaks
 
