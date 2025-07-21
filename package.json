@@ -60,7 +60,7 @@
   "homepage": "https://github.com/strg-at/behave.tracking-client-lib#readme",
   "dependencies": {
     "eslint": "9.31.0",
-    "eslint-config-prettier": "10.1.5"
+    "eslint-config-prettier": "10.1.8"
   },
   "files": [
     "lib",
