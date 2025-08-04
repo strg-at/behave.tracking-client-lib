@@ -52,7 +52,7 @@
     "jsdom": "^26.1.0",
     "prettier": "3.5.3",
     "ts-jest": "^29.3.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "bugs": {
     "url": "https://github.com/strg-at/behave.tracking-client-lib/issues"
