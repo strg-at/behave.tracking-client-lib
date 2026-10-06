@@ -12,6 +12,6 @@ on:
 jobs:
   publish:
     name: publish package
-    uses: strg-at/github-workflows/.github/workflows/npm-publish.yaml@2c2ab5cac48aa7c90d103cd6552ca5ef013cad81 # v2.4.0
+    uses: strg-at/github-workflows/.github/workflows/npm-publish.yaml@9635575ac12b34942cf67593e0bcdbeca632a903 # v2.5.0
     with:
       runner: '["ubuntu-latest"]'
